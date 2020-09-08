@@ -1,0 +1,49 @@
+/* Applies to the entire body of the HTML document (except where overridden by more specific
+selectors). */
+
+@font-face {
+    font-family: FMTowns_8x8;
+    src: url(fonts/web_toshibasat_9x8.woff);
+  }
+
+
+body {
+    margin: 25px;
+    text-align: center;
+    background-color: rgb(255, 153, 0);
+    font-family: FMTowns_8x8;
+    font-size: 24px;
+  }
+  
+  /* Applies to all <h1>...</h1> elements. */
+  h1 {
+    font-size: 35px;
+    font-size: 2vw;
+    font-weight: normal;
+    margin-top: 5px;
+  }
+
+  .title {
+    font-size: 32px;
+    font-size: 3vw;
+    
+  }
+
+  .link {
+    color: rgb(0, 0, 0);
+    text-decoration: underline dotted;
+    font-size: 28px;
+    font-size: 2vw;
+    text-align: center !important;
+  }
+
+  .row {
+    display: flex;
+  }
+  
+  .column {
+    flex: 33.33%;
+    padding: 1vw;
+
+    height: 50vh;
+  }
