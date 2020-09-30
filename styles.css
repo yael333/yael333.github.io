@@ -3,14 +3,14 @@ selectors). */
 
 @font-face {
     font-family: FMTowns_8x8;
-    src: url(fonts/web_toshibasat_9x8.woff);
+    src: url(fonts/TerminusTTF-Bold-4.47.0_121b4546bf5e2d519015835ec870178b.ttf);
   }
 
 
 body {
     margin: 25px;
     text-align: center;
-    background-color: rgb(255, 153, 0);
+    background-color: rgb(74, 32, 64);
     font-family: FMTowns_8x8;
     font-size: 24px;
   }
@@ -24,14 +24,15 @@ body {
   }
 
   .title {
+    color: rgb(244, 172, 183);
     font-size: 32px;
     font-size: 3vw;
     
   }
 
   .link {
-    color: rgb(0, 0, 0);
-    text-decoration: underline dotted;
+    color: rgb(244, 172, 183);
+    text-decoration: underline;
     font-size: 28px;
     font-size: 2vw;
     text-align: center !important;
@@ -45,5 +46,5 @@ body {
     flex: 33.33%;
     padding: 1vw;
 
-    height: 50vh;
+    height: 45vh;
   }
