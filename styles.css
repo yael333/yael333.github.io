@@ -2,16 +2,15 @@
 selectors). */
 
 @font-face {
-    font-family: FMTowns_8x8;
-    src: url(fonts/TerminusTTF-Bold-4.47.0_121b4546bf5e2d519015835ec870178b.ttf);
+    font-family: "magic";
+    src: url("fonts/magic.ttf");
   }
 
 
 body {
-    margin: 25px;
     text-align: center;
     background-color: rgb(74, 32, 64);
-    font-family: FMTowns_8x8;
+    font-family: "magic", Verdana;
     font-size: 24px;
 
     overflow-y: hidden;
@@ -26,11 +25,26 @@ body {
   }
 
   .title {
-    color: rgb(244, 172, 183);
-    font-size: 32px;
-    font-size: 3vw;
-    
+    color: #ff7aab;
+    font-size: 5vw;
   }
+
+  .text {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+
+    color: #ff7aab;
+    font-size: 2vw;
+  }
+
+  .text img {
+    width: 10vw;
+    height: 10vh;
+
+    margin: 3vw;
+  }
+  
 
   .row {
     display: flex;
@@ -38,9 +52,14 @@ body {
   
   .column {
     flex: 33.33%;
-    padding: 1vw;
 
-    height: 45vh;
+    width: 1vw;
+    height: 1vh;
+  }
+
+  .column img{
+    width: 5vw;
+    height: 5vh;
   }
 
   .logo {
@@ -53,6 +72,7 @@ body {
     fill: #ff7aab;
     content: '';
     position: relative;
+    pointer-events: none;
 
     width: 4vw;
     height: 4vw;
