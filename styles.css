@@ -11,22 +11,13 @@ body {
     text-align: center;
     background-color: rgb(74, 32, 64);
     font-family: "magic", Verdana;
-    font-size: 24px;
 
     overflow-y: hidden;
-  }
-  
-  /* Applies to all <h1>...</h1> elements. */
-  h1 {
-    font-size: 35px;
-    font-size: 2vw;
-    font-weight: normal;
-    margin-top: 5px;
   }
 
   .title {
     color: #ff7aab;
-    font-size: 5vw;
+    font-size: 6vw;
   }
 
   .text {
@@ -35,16 +26,8 @@ body {
     align-items: center;
 
     color: #ff7aab;
-    font-size: 2vw;
+    font-size: 4vw;
   }
-
-  .text img {
-    width: 10vw;
-    height: 10vh;
-
-    margin: 3vw;
-  }
-  
 
   .row {
     display: flex;
