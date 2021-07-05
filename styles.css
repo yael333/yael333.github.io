@@ -17,7 +17,7 @@ body {
 
   .title {
     color: #ff7aab;
-    font-size: 6vw;
+    font-size: 1.3vw;
   }
 
   .text {
@@ -26,7 +26,7 @@ body {
     align-items: center;
 
     color: #ff7aab;
-    font-size: 4vw;
+    font-size: 3vw;
   }
 
   .row {
