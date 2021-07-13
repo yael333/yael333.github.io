@@ -1,14 +1,33 @@
+body = document.body
 terminal = document.querySelector("#terminal")
 page = document.querySelector("#page")
 audio = document.getElementById("audio");
 text = 
 	[
-	["hi", 500],
-	["swag", 1000],
-	["dab", 3000],
+	["konataOS boot ok!", 750],
+	["...", 200],
+	["/home/konata/mypage", 500],
+	["page loading...", 800],
+	["initializing engine...", 1200],
+	["render mode: software", 600],
+	["sound card compatible...", 500],
+	["checking gay levels...", 1500],
+	["gay levels ok!", 500],
+	["checking system...", 1000],
+	["minimum specs ok!", 500],
+	["--------------------------------", 500],
+
 	]
+
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function listenEvents()
+{
+	document.addEventListener('mousedown', main, {once: true});
+	document.addEventListener('keypress', main, {once: true});
+	document.addEventListener('touchstart', main, {once: true});
 }
 
 async function main(event)
@@ -34,13 +53,6 @@ async function main(event)
 		audio.volume -= 0.01
 	}
 	audio.pause()
-}
-
-function listenEvents()
-{
-	document.addEventListener('mousedown', main, {once: true});
-	document.addEventListener('keypress', main, {once: true});
-	document.addEventListener('touchstart', main, {once: true});
 }
 
 window.onload = listenEvents

@@ -1,23 +1,25 @@
-/* Applies to the entire body of the HTML document (except where overridden by more specific
-selectors). */
-
 @font-face {
     font-family: "magic";
-    src: url("fonts/magic.ttf");
+    src: url("fonts/Bitmgothic.ttf");
+  }
+
+@font-face {
+    font-family: "pixel";
+    src: url("fonts/gohu.woff");
   }
 
 
 body {
     text-align: center;
-    background-color: rgb(74, 32, 64);
+    background-color: #010101;
     font-family: "magic", Verdana;
 
     overflow-y: hidden;
   }
 
   .title {
-    color: #ff7aab;
-    font-size: 1.3vw;
+    color: #892CDC;
+    font-size: 1.6vw;
   }
 
   .text {
@@ -25,7 +27,7 @@ body {
     justify-content: center;
     align-items: center;
 
-    color: #ff7aab;
+    color: #892CDC;
     font-size: 3vw;
   }
 
