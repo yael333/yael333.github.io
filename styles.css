@@ -59,8 +59,8 @@ body {
     position: relative;
     pointer-events: none;
 
-    width: 4vw;
-    height: 4vw;
+    width: 5vw;
+    height: 5vw;
   }
 
   @keyframes floating {
@@ -72,9 +72,29 @@ body {
     }
   }
 
+  @keyframes cross1 {
+    0% {
+      transform: translateY(-50%) rotate(-200deg)
+    }
+    100% {
+      transform: translateY(75%) rotate(-165deg)
+    }
+  }
+  
+  @keyframes cross2 {
+    0% {
+      transform: translateY(-50%) rotate(200deg)
+    }
+    100% {
+      transform: translateY(75%) rotate(235deg)
+    }
+  }
+
+
 .floating img:nth-child(1) { animation-delay: -15s }
 .floating img:nth-child(2) { animation-delay: -3s }
 .floating img:nth-child(3) { animation-delay: -26s }
+.floating img:nth-child(4) { animation-delay: -9s }
 
 
 /*Stolen from http://aleclownes.com/2017/02/01/crt-display.html*/

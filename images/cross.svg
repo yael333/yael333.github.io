@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="210mm"
+   height="297mm"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.5 r10040"
+   sodipodi:docname="Documento nuevo 1">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#892CDC"
+     bordercolor="#892CDC"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.44"
+     inkscape:cx="69.318182"
+     inkscape:cy="520"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1600"
+     inkscape:window-height="837"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="fill:#892CDC;fill-opacity:1;fill-rule:evenodd;stroke:none"
+       d="m 291.86532,21.880682 0,171.970828 -211.559272,0 0,144.0435 211.559272,0 0,517.67033 144.06829,0 0,-517.67033 218.76392,0 0,-144.0435 -218.76392,0 0,-171.970828 -144.06829,0 z m 19.80661,17.999251 106.23767,0 0,168.801757 1.33694,0 0,2.27777 216.53568,0 0,106.21289 -216.53568,0 0,3.1443 -1.33694,0 0,517.2494 -106.23767,0 0,-517.2494 -0.47041,0 0,-3.1443 -210.19757,0 0,-106.21289 210.19757,0 0,-2.27777 0.47041,0 0,-168.801757 z"
+       id="rect2985"
+       inkscape:connector-curvature="0" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot3010"
+       style="fill:black;stroke:none;stroke-opacity:1;stroke-width:1px;stroke-linejoin:miter;stroke-linecap:butt;fill-opacity:1;font-family:Sans;font-style:normal;font-weight:normal;font-size:40px;line-height:125%;letter-spacing:0px;word-spacing:0px"><flowRegion
+         id="flowRegion3012"><rect
+           id="rect3014"
+           width="388.63635"
+           height="147.72728"
+           x="77.272728"
+           y="881.90765" /></flowRegion><flowPara
+         id="flowPara3016"></flowPara></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot3018"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       transform="translate(-9.0909086,22.727273)"><flowRegion
+         id="flowRegion3020"><rect
+           id="rect3022"
+           width="440.90909"
+           height="170.45454"
+           x="72.727272"
+           y="847.81671" /></flowRegion><flowPara
+         id="flowPara3024"
+         style="font-size:48px">Juan Felipe Correa</flowPara><flowPara
+         id="flowPara3026"><flowSpan
+   style="font-size:48px"
+   id="flowSpan3030">10-07 Sistemas de I</flowSpan>.</flowPara><flowPara
+         id="flowPara3028" /></flowRoot>  </g>
+</svg>
