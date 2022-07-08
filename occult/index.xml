@@ -1,1 +1,19 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Occults on Konata's Covenstead</title><link>https://konata.gay/occult/</link><description>Recent content in Occults on Konata's Covenstead</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><atom:link href="https://konata.gay/occult/index.xml" rel="self" type="application/rss+xml"/><item><title/><link>https://konata.gay/occult/keys-of-solomon/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://konata.gay/occult/keys-of-solomon/</guid><description>coming soon~~</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Occults on Konata&#39;s Covenstead</title>
+    <link>https://konata.gay/occult/</link>
+    <description>Recent content in Occults on Konata&#39;s Covenstead</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language><atom:link href="https://konata.gay/occult/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title></title>
+      <link>https://konata.gay/occult/keys-of-solomon/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://konata.gay/occult/keys-of-solomon/</guid>
+      <description>coming soon~~</description>
+    </item>
+    
+  </channel>
+</rss>
