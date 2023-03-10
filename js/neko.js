@@ -62,7 +62,7 @@
         nekoEl.style.scale = "2";
         nekoEl.style.position = "fixed";
         nekoEl.style.pointerEvents = "none";
-        nekoEl.style.backgroundImage = "url('./images/oneko.gif')";
+        nekoEl.style.backgroundImage = "url('./img/oneko.gif')";
         nekoEl.style.imageRendering = "pixelated";
         nekoEl.style.left = "16px";
         nekoEl.style.top = "16px";
