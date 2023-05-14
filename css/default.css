@@ -78,6 +78,10 @@ article .header {
   text-decoration: none;
 }
 
+.blinky img {
+  width: 15%;
+}
+
 @media (max-width: 319px) {
   body {
     width: 90%;
