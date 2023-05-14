@@ -3,7 +3,7 @@ title: "Demonstration of Malware Persistence through Microsoft Internet Explorer
 ---
 
 
-One of the most undeniable and topics concern with Microsoft\'s smash hit Windows is the bloat in software and features. It is a focal point point in malware targeting, abusing poorly designed systems and preying on it\'s huge userbase.
+One of the most undeniable topic and oncern with Microsoft\'s smash hit Windows is the bloat in software and features. It is a focal point point in malware targeting, abusing poorly designed systems and preying on it\'s huge userbase.
 
 All of it undeniably ties in into The Browser Wars Microsoft found themselves in, all tech corps trying to shill their spyware packaged with an open-source web browser engine. Besides my serious non important opinions on the matter, I think we\'re all familiar with Internet Explorer, an old piece of tech that still comes packaged on all Windows systems and is damn near impossible to get rid off.
 
