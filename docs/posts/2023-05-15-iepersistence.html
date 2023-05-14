@@ -36,7 +36,7 @@
         
     </section>
     <section>
-        <p>One of the most undeniable and topics concern with Microsoft's smash hit Windows is the bloat in software and features. It is a focal point point in malware targeting, abusing poorly designed systems and preying on it's huge userbase.</p>
+        <p>One of the controversial concerns with Microsoft's smash hit Windows is the bloat in software and features. It is a focal point point in malware targeting, abusing poorly designed systems and preying on it's huge userbase.</p>
 <p>All of it undeniably ties in into The Browser Wars Microsoft found themselves in, all tech corps trying to shill their spyware packaged with an open-source web browser engine. Besides my serious non important opinions on the matter, I think we're all familiar with Internet Explorer, an old piece of tech that still comes packaged on all Windows systems and is damn near impossible to get rid off.</p>
 <p>Per usual, let's try to abuse the fact it is so atomic to Window's user experience and try to achieve some sort of malware persistence.
 I opened procmon from the sysinternals utilities suite looking for potential DLL injections, in the case IE tries to load non existent / or creates it's own DLLs we're able to intervene and load our "malicious" ones.<br />
@@ -70,8 +70,9 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpReser
     return TRUE;
 }</code></pre>
 <p>Time for compilation, I will use Visual Studio's built in solutions although it is fairly flexible.
-After it's done, we need to put it where IE loads it from and rename it to solution.dll:
-<img src="../img/iepersistence/cp.png" />
+After it's done, we need to put it where IE loads it from and rename it to solution.dll:<br />
+</p>
+<p><img src="../img/iepersistence/cp.png" />
 <img src="../img/iepersistence/pwn.png" /></p>
 <h3 id="wow-we-got-our-pwn">WOW, we got our pwn~<br />
 </h3>

@@ -47,7 +47,8 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpReser
 ```
 
 Time for compilation, I will use Visual Studio\'s built in solutions although it is fairly flexible.
-After it\'s done, we need to put it where IE loads it from and rename it to solution.dll:
+After it\'s done, we need to put it where IE loads it from and rename it to solution.dll: \
+
 ![](../img/iepersistence/cp.png)
 ![](../img/iepersistence/pwn.png)
 
