@@ -15,7 +15,7 @@
         <meta name="description" content />
         <link rel="icon" type="image/png" sizes="32x32" href="../img/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="../img/favicon-16x16.png">
-        <title>Yael's Digital Grimoire ~ Witchcraft and Security: Introducing HexNix, the Magical NixOS Flake</title>
+        <title>Yael's Digital Grimoire ~ Achieving Malware Persistence through Microsoft Internet Explorer - Introductory</title>
         <link rel="stylesheet" href="../css/default.css" />
     </head>
     <body>
@@ -29,14 +29,19 @@
         </header> -->
 
         <main role="main" class="main">
-            <h1>Witchcraft and Security: Introducing HexNix, the Magical NixOS Flake</h1>
+            <h1>Achieving Malware Persistence through Microsoft Internet Explorer - Introductory</h1>
             <article>
     <section class="header">
         Posted on March  4, 2023
         
     </section>
     <section>
-        <h2 id="coming-soon">coming soon~</h2>
+        <p>One of the most undeniable and topics concern with Microsoft's smash hit Windows is the bloat in software and features. It is a focal point point in malware targeting, abusing poorly designed systems and preying on it's huge userbase.</p>
+<p>All of it undeniably ties in into The Browser Wars Microsoft found themselves in, all tech corps trying to shill their spyware packaged with an open-source web browser engine. Besides my serious non important opinions on the matter, I think we're all familiar with Internet Explorer, an old piece of tech that still comes packaged on all Windows systems and is damn near impossible to get rid off.</p>
+<p>Per usual, let's try to abuse the fact it is so atomic to Window's user experience and try to achieve some sort of malware persistence.
+I opened procmon from the sysinternals utilities suite looking for potential DLL injections, in the case IE tries to load non existent / or creates it's own DLLs we're able to intervene and load our "malicious" ones.<br />
+Using these filters, we can look for specific kinds of DLLs that only exist on runtime:</p>
+<p><img src="../img/iepersistence/filters.png" /></p>
     </section>
 </article>
         </main>
