@@ -1,4 +1,0 @@
----
-title: "Witchcraft and Security: Introducing HexNix, the Magical NixOS Flake"
----
-## coming soon~

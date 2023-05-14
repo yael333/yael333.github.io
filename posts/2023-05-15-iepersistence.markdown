@@ -1,5 +1,5 @@
 ---
-title: "Achieving Malware Persistence through Microsoft Internet Explorer - Introductory"
+title: "Demonstration of Malware Persistence through Microsoft Internet Explorer"
 ---
 
 

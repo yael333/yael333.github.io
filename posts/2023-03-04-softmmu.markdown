@@ -1,4 +1,0 @@
----
-title: "Kernel-Level Magic: From Paging to Owning in pwnable.kr's softmmu Challenge"
----
-## coming soon~
