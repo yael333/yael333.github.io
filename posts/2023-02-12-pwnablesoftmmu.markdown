@@ -12,7 +12,7 @@ The last of those challanges is *softmmu*, here\'s the readme\:\
 <img src="../img/softmmu/softmmu.png" style="width:20%">
 
 ## The Challange
-We\'re given two things: a linux kernel object file containing some sort of a driver, and access to a fairly old linux virtual machine loaded with said driver. Before we open the executable for further inspection in IDA, let\'s SSH into the machine and check what it does.
+We\'re given two things: a linux kernel object file containing some sort of a driver, and access to a fairly old linux virtual machine loaded with asid driver. Before we open the executable for further inspection in IDA, let\'s SSH into the machine and check what it does.
 
 ```
 ...
