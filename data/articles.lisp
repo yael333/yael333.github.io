@@ -6,12 +6,12 @@
 (defvar *config*
   (list
    :webmaster       "Yael"
-   :title           "Covenstead"
-   :description     "Yet another website on the net"
-   :url             "https://my.website/~~user/"        ;; the trailing slash is mandatory! RSS links will fail without it. Notice the '~~' to produce a literal '~'
-   :rss-item-number 3                                  ;; limit total amount of items in RSS feed to 10
+   :title           "ᛟYael"
+   :description     "Yael's Digital Grimoire"
+   :url             "https://yaelsgrimoire.dev/"        ;; the trailing slash is mandatory! RSS links will fail without it. Notice the '~~' to produce a literal '~'
+   :rss-item-number 00                                  ;; limit total amount of items in RSS feed to 10
    :date-format "%DayNumber %MonthName %Year"           ;; format for date %DayNumber %DayName %MonthNumber %MonthName %Year
-   :date-format-title "%DayNumber-%MonthNumber-%Year"           ;; format for date %DayNumber %DayName %MonthNumber %MonthName %Year
+   :date-format-title "%DayNumber-%MonthNumber-%Year"   ;; format for date %DayNumber %DayName %MonthNumber %MonthName %Year
 
    :default-converter :markdown2
    :html   t                                            ;; 't' to enable export to a html website / 'nil' to disable
