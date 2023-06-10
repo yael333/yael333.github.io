@@ -1,0 +1,17 @@
+/* =================================================================== */
+                        /* style.css for cl-yag */
+/* =================================================================== */
+@charset "utf-8";
+
+
+/* ~                             PURE                                ~ */
+@import url("pure_r1.0.0/pure.css");
+
+
+/* ~                             CLYM                                ~ */
+@import url("clym.css");
+
+
+/* ~                          LAST ENTRY                             ~ */
+/* ~             use custom.css for overriding rules                 ~ */
+@import url("custom.css");

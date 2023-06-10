@@ -1,0 +1,11 @@
+<item>
+  <title>%%Title%%</title>
+  <description>
+    <![CDATA[
+%%Description%%
+    ]]>
+  </description>
+  <guid>%%Url%%</guid>
+  <link>%%Url%%</link>
+  <pubDate>%%Date%%</pubDate>
+</item>

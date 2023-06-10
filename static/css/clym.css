@@ -1,0 +1,215 @@
+/*
+ * OpenBSD License
+ *
+ * Copyright (c) 2017 lambda <lambda@fnord.one>
+ *
+ * Permission to use, copy, modify, and distribute this software for any
+ * purpose with or without fee is hereby granted, provided that the
+ * above copyright notice and this permission notice appear in all
+ * copies.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL
+ * WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE
+ * AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL
+ * DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR
+ * PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER
+ * TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+ * PERFORMANCE OF THIS SOFTWARE.
+ */
+
+/* ====================================================== */
+/* A basic style for           	      wrapper main footer */
+/* ====================================================== */
+html{
+    overflow-y:scroll;
+}
+html, body { 
+    margin: 0em;
+    padding: 0em;
+    min-height:100%;
+    height: 100%;
+}
+body {
+    position: relative;
+    margin: 0 auto;
+    padding: 0em 1em;
+}
+#wrapper {
+    position: relative;
+    width:100%;
+    min-height: 100%;
+    margin: 0em auto;
+}
+main {
+    padding-bottom: 3em;
+    height:100%;
+}
+main:after {
+    display: block;
+    width: 100%;
+    content:"";
+    clear: both;
+}
+footer {
+    position: absolute;
+    width: 100%;
+    height: 3em;
+    bottom: 0em;
+    text-align: center;
+}
+footer > p {
+    display: block;
+    text-align: center;
+    font-size: 0.9em;
+}
+/* ====================================================== */
+/* A basic style for                               header */
+/* ====================================================== */
+/* All Tags */
+header > div {
+    display: block;
+    margin: 0.5em auto auto auto;
+    padding: 1ex;
+    float: right;
+    border: 1px solid transparent;
+    min-width: auto;
+    max-width: 100%;
+}
+/* ====================================================== */
+/* A basic responsive'ish ruleset                         */
+/* ====================================================== */
+@media only screen and (min-width: 360px) {
+    #wrapper {
+	font-size: 0.95em;
+    }
+}
+@media only screen and (min-width: 800px) {
+    #wrapper {
+	max-width: 750px;
+	font-size: 1em;
+    }
+}
+@media only screen and (min-width: 1000px) {
+    #wrapper {
+	max-width: 800px;
+    }
+}
+@media only screen and (min-width: 1025px) {
+    #wrapper {
+	max-width: 1000px;
+    }
+}
+/* ====================================================== */
+/* A basic theme                                          */
+/* ====================================================== */
+html, body { 
+	font-family: Arial, sans;
+	color: #1f1f1f ;
+}
+main {
+    line-height: 1.3em;
+}
+h1,h2,h3 {
+    font-weight: bold;
+    line-height: 1.8;
+    margin: 0em;
+}
+h1 {
+    font-size: 175%;
+}
+h2 {
+    font-size: 150%;
+}
+h3 {
+    font-size: 125%;
+}
+p {
+    text-align: justify;
+}
+a {
+    color: #3b5487;
+    text-decoration: none;
+}
+a:active, a:hover, a:focus {
+    color: #203785;
+    text-decoration: underline;
+}
+footer > p {
+    display: block;
+    text-align: center;
+    font-size: 0.9em;
+}
+/* default style for 'information' */
+article > header {
+    font-weight: 900;
+    font-size: 90%;
+    text-align: center;
+}
+article > header > h1 > a {
+    color: #1f1f1f ;
+    text-decoration: none;
+}
+
+/* ====================================================== */
+/* A basic style for          	                     code */
+/* ====================================================== */
+.src, code {
+    display:inline-block;
+    padding: 1px 5px;
+    border-radius: 3px;
+    background-color: #e3f0ff;
+    font-weight: 700;
+    font-size: 0.8em;
+    color: #3c3f42;
+}
+pre > code, pre.src {
+    display: block;
+    height: auto;
+    padding: 1em;
+}
+/* ====================================================== */
+/* A basic style for                                posts */
+/* ====================================================== */
+article {
+    display: block;
+    float: left;
+    clear:both;
+    width: 100%;
+}
+article:after {
+    display:block;
+    height: 1em;
+    content:"";
+    clear:both;
+}
+article > header {
+    display:block;
+    margin: 0em;
+    padding: 1em;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    -webkit-box-shadow: 1px 1px 5px 1px #1f1f1f;
+    box-shadow: 1px 1px 5px 1px #1f1f1f;
+}
+article > header:after {
+    display:block;
+    width:100%;
+    height: auto;
+    content:"";
+    clear:both;
+}
+article > header > .information {
+    font-size: 80%;
+}
+article > header > h1 {
+    float: left;
+    margin: auto 1em;
+}
+article > header > p {
+    float: left;
+    margin-top: 5px;
+}
+article > header + h1 {
+    margin-top: 1em;
+}
