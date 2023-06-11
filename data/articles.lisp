@@ -9,7 +9,7 @@
    :title           "ᛟYael"
    :description     "Yael's Digital Grimoire"
    :url             "https://yaelsgrimoire.dev/"        ;; the trailing slash is mandatory! RSS links will fail without it. Notice the '~~' to produce a literal '~'
-   :rss-item-number 00                                  ;; limit total amount of items in RSS feed to 10
+   :rss-item-number 10                                  ;; limit total amount of items in RSS feed to 10
    :date-format "%DayNumber %MonthName %Year"           ;; format for date %DayNumber %DayName %MonthNumber %MonthName %Year
    :date-format-title "%DayNumber-%MonthNumber-%Year"   ;; format for date %DayNumber %DayName %MonthNumber %MonthName %Year
 
@@ -17,11 +17,11 @@
    :html   t                                            ;; 't' to enable export to a html website / 'nil' to disable
    :gopher t                                            ;; 't' to enable export to a gopher website / 'nil' to disable
    :gemini t                                            ;; 't' to enable export to a gemini capsule / 'nil' to disable
-   :gemini-path      "gemini://perso.pw/blog/"          ;; absolute path of your gemini capsule
+   :gemini-path      "gemini://localhost"          ;; absolute path of your gemini capsule
    :gemini-index     "index.md"                         ;; filename of index file
-   :gopher-path      "/user"                            ;; absolute path of your gopher directory
-   :gopher-server    "my.website"                       ;; hostname of the gopher server
-   :gopher-port      "70"                               ;; tcp port of the gopher server, 70 usually
+   :gopher-path      "./"                            ;; absolute path of your gopher directory
+   :gopher-server    "localhost"                       ;; hostname of the gopher server
+   :gopher-port      "7070"                               ;; tcp port of the gopher server, 70 usually
    :gopher-format "[~d|~a|~a|~a|~a]~%"                  ;; menu format (geomyidae)
    :gopher-index "index.gph"                            ;; menu file   (geomyidae)
    ;; :gopher-format "~d~a	~a	~a	~a~%"   ;; menu format (gophernicus and others)

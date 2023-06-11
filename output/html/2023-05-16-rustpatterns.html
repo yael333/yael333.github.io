@@ -38,7 +38,7 @@
 
 </p>
   </header>
-  <p>My journey with Rust has been rocky to say the least, from fandom to hating back to loving it, I never stopped learning about how I program and engineer. I'm a huge nerd of Functional Programming and the thing that absolutely sold me about rust is it's algebric type system, it is my biggest joy to bring type proofness and complexity to low level programs. The pattern matching in it makes for expressive, readable and type-safe code. In this blog article we will take a look at this topic, and I hope you can learn something from it :3</p>
+  <p>My journey with Rust has been rocky to say the least, from fandom to hating back to loving it, I never stopped learning about how I program and engineer. I&#8217;m a huge nerd of Functional Programming and the thing that absolutely sold me about rust is it&#8217;s algebric type system, it is my biggest joy to bring type proofness and complexity to low level programs. The pattern matching in it makes for expressive, readable and type-safe code. In this blog article we will take a look at this topic, and I hope you can learn something from it :3</p>
 
 <h2 id="patterns">Patterns</h2>
 
@@ -46,7 +46,7 @@
 
 <p>Patterns in Rust come in two types; refutable and irrefutable. Patterns that match conditionally are called refutable, while patterns that match any possible value are called irrefutable. Which one you can use will depend on the context. For example, a let-statement will need a irrefutable pattern, because what would happen if a variable in a let-statement doesn’t get a value?</p>
 
-<pre><code>// Irrefutable patterns - variable bindings, always succeeds
+<pre><code class="rust">// Irrefutable patterns - variable bindings, always succeeds
 let x = 5;
 let (x, y) = (1, 2);
 
@@ -54,9 +54,9 @@ let (x, y) = (1, 2);
 let Ok(x) = string.parse::&lt;i32&gt;() // parsing a string will return a Result&lt;T&gt;, and it is refutable whether it's an OK(x)
 </code></pre>
 
-<p>if let statements on the other hand can have refutable patterns, as the body is evaulated conditionally and it's refutability is inherent:</p>
+<p>if let statements on the other hand can have refutable patterns, as the body is evaulated conditionally and it&#8217;s refutability is inherent:</p>
 
-<pre><code>if let Ok(x) = string.parse::&lt;i32&gt;() {
+<pre><code class="rust">if let Ok(x) = string.parse::&lt;i32&gt;() {
   // ... do something if string can be parsed as a 32 bit integer ...
 }
 
@@ -68,13 +68,13 @@ if let Ok(64) = someString.parse::&lt;i32&gt;() {
 
 <h2 id="destructuring">Destructuring</h2>
 
-<p>Many patterns destructure various types, and they can also be mixed and match together. Let\’s look at some of them together~</p>
+<p>Many patterns destructure various types, and they can also be mixed and match together. Let’s look at some of them together~</p>
 
 <h3 id="tuples">Tuples</h3>
 
-<p>You are already probably familiar with tuple destructuring, but let's examine again:</p>
+<p>You are already probably familiar with tuple destructuring, but let&#8217;s examine again:</p>
 
-<pre><code>// tuple: (i32, i32, &amp;str)
+<pre><code class="rust">// tuple: (i32, i32, &amp;str)
 let tuple = (1, 2, &quot;three&quot;);
 let (x, y, z_str) = tuple;
 </code></pre>
@@ -84,7 +84,7 @@ This can be done for all sorts of tuples, as long as the destructured types matc
 
 <p>My favorite trick is that you can match elements with <code>..</code> or <code>_</code>, which are used to skip elements and create more complex logic:</p>
 
-<pre><code>// discard z_str
+<pre><code class="rust">// discard z_str
 let (x, y, _) = tuple;
 
 // get only x
@@ -100,13 +100,13 @@ let (..., middle, ...) = big_tuple;
 
 <h3 id="structs">Structs</h3>
 
-<p>Structs are not much different than tuples, i'll save your internet bandwidth by not showing an example although it is very self explanatory. The only difference is the .. behaviour, when deconstructing it has to come last and it means to match the rest and ignore the result.</p>
+<p>Structs are not much different than tuples, i&#8217;ll save your internet bandwidth by not showing an example although it is very self explanatory. The only difference is the .. behaviour, when deconstructing it has to come last and it means to match the rest and ignore the result.</p>
 
 <h3 id="enums">Enums</h3>
 
 <p>This might be the simplest yet most important of them all, the simplest case for enum deconstructing is to match one with no data:</p>
 
-<pre><code>// simple enum
+<pre><code class="rust">// simple enum
 enum TrafficSignal {
     Red,
     Orange,
@@ -121,7 +121,7 @@ if let Color::green = my_color {
 
 <p>Luckily, Rust enums are way way more interesting as they contain data. So much complexity arises out of that.</p>
 
-<pre><code>// complex enum
+<pre><code class="rust">// complex enum
 enum Enemy {
     Alive(u32),
     Dead
@@ -140,9 +140,9 @@ if let Enemy::Dead = my_enemy {
 
 <h2 id="otherpatterns">Other Patterns</h2>
 
-<p>There are other types of patterns in Rust that capture a lot of elementary and cool behaviour. Since they're varied it is best to just demonstrate them:</p>
+<p>There are other types of patterns in Rust that capture a lot of elementary and cool behaviour. Since they&#8217;re varied it is best to just demonstrate them:</p>
 
-<pre><code>// OR pattern
+<pre><code class="rust">// OR pattern
 
 1 | 2 | 3 // matches 1, 2, or 3
 &quot;one&quot; | &quot;two&quot; // matches one of these two strings
@@ -166,12 +166,12 @@ if let Point {x: my_x @ 1..=10, ..} = my_data {
 
 <h2 id="thepayoff">The Payoff</h2>
 
-<p>pattern matching is closely related to Rust's powerful algebric type system. We can combine the different behaviours of patterns in order to write clear and simply awesome code~!<br>
-One example that speaks to itself and shows the immense power pattern matching has is to pit it against object-oriented code. let's consider a case where we have a Shape hierarchy with two concrete classes (Circle and Rectangle), we'll compare the object-oriented approach in java with the pattern matching code in Rust.</p>
+<p>pattern matching is closely related to Rust&#8217;s powerful algebric type system. We can combine the different behaviours of patterns in order to write clear and simply awesome code~!<br>
+One example that speaks to itself and shows the immense power pattern matching has is to pit it against object-oriented code. let&#8217;s consider a case where we have a Shape hierarchy with two concrete classes (Circle and Rectangle), we&#8217;ll compare the object-oriented approach in java with the pattern matching code in Rust.</p>
 
 <h3 id="javaoop:">Java (OOP):</h3>
 
-<pre><code>abstract class Shape {
+<pre><code class="java">abstract class Shape {
     abstract double calculateArea();
 }
 
@@ -220,7 +220,7 @@ public class Main {
 
 <h3 id="rustpatternmatching:">Rust (Pattern Matching):</h3>
 
-<pre><code>enum Shape {
+<pre><code class="rust">enum Shape {
     Circle(f64),
     Rectangle(f64, f64),
 }

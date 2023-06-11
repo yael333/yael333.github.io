@@ -41,10 +41,9 @@
 
 </p>
   </header>
-  <p>Over the years of my CTF'ing I always come back to <a href="https://pwnable.kr">pwnable.kr</a>, although a tad outdated it's a vast source of simply awesome binary exploitation and pwn challanges. In particular their kernel exploitation series of challanges interest me - they're really well made and good introductory material on the matter. Per the policies on the site, this writeup won't share any source code and try to be minimal as possible.</p>
+  <p>Over the years of my CTF&#8217;ing I always come back to <a href="https://pwnable.kr">pwnable.kr</a>, although a tad outdated it&#8217;s a vast source of simply awesome binary exploitation and pwn challanges. In particular their kernel exploitation series of challanges interest me - they&#8217;re really well made and good introductory material on the matter. Per the policies on the site, this writeup won&#8217;t share any source code and try to be minimal as possible.</p>
 
-<p>The last of those challanges is <em>softmmu</em>, here's the readme:
-</p>
+<p>The last of those challanges is <em>softmmu</em>, here&#8217;s the readme:</p>
 
 <blockquote>
 <p><strong><em>If you are good at kernel exploit, try this one :)</em></strong></p>
@@ -54,13 +53,13 @@
 
 <h2 id="thechallange">The Challange</h2>
 
-<p>We're given two things: a linux kernel object file containing some sort of a driver, and access to a fairly old linux virtual machine loaded with asid driver. Before we open the executable for further inspection in IDA, let's SSH into the machine and check what it does.</p>
+<p>We&#8217;re given two things: a linux kernel object file containing some sort of a driver, and access to a fairly old linux virtual machine loaded with asid driver. Before we open the executable for further inspection in IDA, let&#8217;s SSH into the machine and check what it does.</p>
 
-<pre><code>...
+<pre><code class="shell">...
 [+] Loading x86 PAE MMU emulator
 [+] Write the virtual address to /proc/softmmu
 [+] You can obtain it's physical address by reading /proc/softmmu
-[+] i.e. echo -ne '\x00\x80\x04\x08' &gt; /proc/softmmu; hexdump -C /proc/softmmu
+[+] i.e. echo -ne 'x00x80x04x08' &gt; /proc/softmmu; hexdump -C /proc/softmmu
 [+] Let the kernel exploit begin :)
 
 $ uname -a
@@ -69,32 +68,34 @@ $ ls /*.ko
 /softmmu.ko
 </code></pre>
 
-<p><em>Hmm</em>, it prints out a pretty explanation for us :3 As the name softmmu hints - the module interfaces with the Linux kernel memory's and emulates a x86 Page Address Extension for the MMU. The interface with the module seems to be very straightforward, we write a virtual address to the device file /proc/softmmu and then read back the physical address.</p>
+<p><em>Hmm</em>, it prints out a pretty explanation for us :3 As the name softmmu hints - the module interfaces with the Linux kernel memory&#8217;s and emulates a x86 Page Address Extension for the MMU. The interface with the module seems to be very straightforward, we write a virtual address to the device file /proc/softmmu and then read back the physical address.</p>
 
 <h2 id="findingavulnerability">Finding A Vulnerability</h2>
 
-<p>Our end goal is to get root, so we definitely have to find a vulnerability to expoloit in the softmmu module. Let's open the kernel object file in IDA to analyze:</p>
+<p>Our end goal is to get root, so we definitely have to find a vulnerability to expoloit in the softmmu module. Let&#8217;s open the kernel object file in IDA to analyze:</p>
 
 <p><img src="./static/img/softmmu/overview.png" style="width:70%"></p>
 
-<p>A fairly tame program, not too many functions and fairly straightforward structure. We are not going to reverse the entire program (since I found the vulnerability quickly) but here are some pointers:
+<p>A fairly tame program, not too many functions and fairly straightforward structure. We are not going to reverse the entire program (since I found the vulnerability quickly) but here are some pointers:</p>
 
-&gt; We cannot request the physical addresses of ones outside userspace (seems important for the exploit).
-&gt; It recursively traverses page table within the mmu_walk() function in order to retrieve addresses.
-&gt; Program contains verbose output for debugging purposes.
+<blockquote>
+<p>We cannot request the physical addresses of ones outside userspace (seems important for the exploit).
+It recursively traverses page table within the mmu_walk() function in order to retrieve addresses.
+Program contains verbose output for debugging purposes.</p>
+</blockquote>
 
-The last point is particulary important; it allows us to understand the inner workings better and perhaps find a vulnerability to exploit, let's look at the debugging code.</p>
+<p>The last point is particulary important; it allows us to understand the inner workings better and perhaps find a vulnerability to exploit, let&#8217;s look at the debugging code.</p>
 
-<pre><code>__int64 __usercall get_pte_entry@&lt;edx:eax&gt;(int a1@&lt;eax&gt;, char *a2@&lt;edx&gt;)
+<pre><code class="c">__int64 __usercall get_pte_entry@&lt;edx:eax&gt;(int a1@&lt;eax&gt;, char *a2@&lt;edx&gt;)
 {
   int v2; // ebx
 
   v2 = *(_DWORD *)&amp;a2[8 * ((a1 &amp; 0x1FF000u) &gt;&gt; 12)];
   if ( (v2 &amp; 1) != 0 )
   {
-    printk(&quot;[Debug] PGD(%x) Dump\n&quot;, a2);
+    printk(&quot;[Debug] PGD(%x) Dumpn&quot;, a2);
     printk(
-      &quot;[task:%s] %p:%02x %p:%02x %p:%02x %p:%02x\n&quot;,
+      &quot;[task:%s] %p:%02x %p:%02x %p:%02x %p:%02xn&quot;,
       (const char *)(__readfsdword((unsigned int)&amp;current_task) + 740),
       a2,
       *a2,
@@ -104,19 +105,20 @@ The last point is particulary important; it allows us to understand the inner wo
       a2[2],
       a2 + 3,
       a2[3]);
-    printk(&quot;[Debug] Dump Virtual Address\n&quot;);
-    printk(&quot;\n===============================\n&quot;);
+    printk(&quot;[Debug] Dump Virtual Addressn&quot;);
+    printk(&quot;n===============================n&quot;);
     printk((const char *)req_vaddr);
-    printk(&quot;\n===============================\n&quot;);
+    printk(&quot;n===============================n&quot;);
   }
   return v2;
 }
 </code></pre>
 
-<p>Fairly bloaty raw decompiled code, but breaking it down it is very simple: it retrieves a page table entry from a PD64 (Page Global Directory entry). Besides the pretty cool kernel level code, the vulnerability here is glaringly obvious - the program passes the address we request (a global variable) to printk().
+<p>Fairly bloaty raw decompiled code, but breaking it down it is very simple: it retrieves a page table entry from a PD64 (Page Global Directory entry). Besides the pretty cool kernel level code, the vulnerability here is glaringly obvious - the program passes the address we request (a global variable) to printk().</p>
 
-&gt; printk((const char *)req_vaddr);
-</p>
+<blockquote>
+<p>printk((const char *)req_vaddr);</p>
+</blockquote>
 
 <h4 id="boom">Boom~!</h4>
 
@@ -124,31 +126,31 @@ The last point is particulary important; it allows us to understand the inner wo
 
 <h2 id="writingtheexploit-pt.1">Writing The Exploit - Pt. 1</h2>
 
-<p>So far this hasn't been a challenge for kernel experts, even a script kiddie can find this vulnerability. I must admit, writing the exploit is much more difficult because a plethora of reasons.
+<p>So far this hasn&#8217;t been a challenge for kernel experts, even a script kiddie can find this vulnerability. I must admit, writing the exploit is much more difficult because a plethora of reasons.</p>
 
-In order to pass a string to the module, we'd have to allocate some bytes in the process memory space. Let's try compile a simple C program on the remote machine to do just that:
-<code>
-/tmp $ gcc pwn.c
+<p>In order to pass a string to the module, we&#8217;d have to allocate some bytes in the process memory space. Let&#8217;s try compile a simple C program on the remote machine to do just that:</p>
+
+<pre><code class="shell">/tmp $ gcc pwn.c
 sh: gcc: not found
-</code>
-<em>Oof</em>, that means we have to cross compile.
-The first problem that imposes us is the fact the remote machine is running a really outdated version of the kernel, paired with the fact it doesn't have internet access it really limits us in how we compile for it.
+</code></pre>
+
+<p><em>Oof</em>, that means we have to cross compile.
+The first problem that imposes us is the fact the remote machine is running a really outdated version of the kernel, paired with the fact it doesn&#8217;t have internet access it really limits us in how we compile for it.
 The soltuion that I came up with was as follows
-compile a static no-stdlib program -&gt; compress it -&gt; base64 the tar.gz -&gt; do the reverse on remote.
-</p>
+compile a static no-stdlib program -&gt; compress it -&gt; base64 the tar.gz -&gt; do the reverse on remote.</p>
 
-<h4 id="thismeanswritingaminimallibcfromscratchgoodluckme...">This means writing a minimal libc from scratch, <em>good luck me</em>...</h4>
+<h4 id="thismeanswritingaminimallibcfromscratchgoodluckme...">This means writing a minimal libc from scratch, <em>good luck me</em>&#8230;</h4>
 
-<p>After a fair amount of work, I got to a level where I had all of the necessary API's to leverage the vulnerability
+<p>After a fair amount of work, I got to a level where I had all of the necessary API&#8217;s to leverage the vulnerability
 On local machine:</p>
 
-<pre><code>yael@covenstead:~/softmmu$ gcc pwn.c -nostdlib -m32 -static -o /dev/stdout | gzip - | base64 -w 0
+<pre><code class="shell">yael@covenstead:~/softmmu$ gcc pwn.c -nostdlib -m32 -static -o /dev/stdout | gzip - | base64 -w 0
 H4sIAAAAAAAAA+1bfWwT5xlz3YSjziNYdmW0nR1p2iE0phAUpY0k0gCB2kFw4RYa9dS49hHEsd2PPtcEgYrzIuI5VnLgE2a1j+Q9v2hqdpUpPHPsqZt...
 </code></pre>
 
 <p>On Remote:</p>
 
-<pre><code>/ $ base64 -d | gunzip - &gt; /tmp/x &amp;&amp; chmod +x /tmp/x &amp;&amp; /tmp/x &quot;%x %x %x %x\n&quot;
+<pre><code class="shell">/ $ base64 -d | gunzip - &gt; /tmp/x &amp;&amp; chmod +x /tmp/x &amp;&amp; /tmp/x &quot;%x %x %x %xn&quot;
 &lt; paste base64 code here &gt;
 [ 1406.371600] virtual address set to dede000
 [ 1406.371963] [Debug] PGD(c2ad1000) Dump
@@ -168,11 +170,10 @@ H4sIAAAAAAAAA+1bfWwT5xlz3YSjziNYdmW0nR1p2iE0phAUpY0k0gCB2kFw4RYa9dS49hHEsd2PPtcE
 [&lt;3] softmmu output: 0xBFB81288
 </code></pre>
 
-<p>
-Awesome~! We're able to leak addresses off the stack :3
-Finally some progress, we should try running the forsakened %n...</p>
+<p>Awesome~! We&#8217;re able to leak addresses off the stack :3
+Finally some progress, we should try running the forsakened %n&#8230;</p>
 
-<pre><code>/ $ base64 -d | gunzip - &gt; /tmp/x &amp;&amp; chmod +x /tmp/x &amp;&amp; /tmp/x &quot;%65n&quot;
+<pre><code class="shell">/ $ base64 -d | gunzip - &gt; /tmp/x &amp;&amp; chmod +x /tmp/x &amp;&amp; /tmp/x &quot;%65n&quot;
 &lt; ... &gt;
 [ 1406.371600] virtual address set to dede000
 [ 1406.371963] [Debug] PGD(c2ad1000) Dump
@@ -192,25 +193,25 @@ Finally some progress, we should try running the forsakened %n...</p>
 [&lt;3] softmmu output: 0xBFB81288
 </code></pre>
 
-<p>OMG, it worked and we wrote into the process name &lt;3! (As seen in the debug messages) All of this work wasn't for nothing.</p>
+<p>OMG, it worked and we wrote into the process name &lt;3! (As seen in the debug messages) All of this work wasn&#8217;t for nothing.</p>
 
 <h2 id="writingtheexploit-pt.2">Writing The Exploit - Pt. 2</h2>
 
-<p>Now for the second part of the exploit, we have to figure out how the hell we take advantage of the format string vulnerability. This isn't like the average format string attack as it's not performed on a userland stack, but a kernel one. Besides our request address which occasionally surfaces down the stack we get nada.
+<p>Now for the second part of the exploit, we have to figure out how the hell we take advantage of the format string vulnerability. This isn&#8217;t like the average format string attack as it&#8217;s not performed on a userland stack, but a kernel one. Besides our request address which occasionally surfaces down the stack we get nada.</p>
 
-Luckily for us we have a bunch of debug values on the stack, some of them might be incredibly useful to craft an exploit. <strong><em>Yes!</em></strong> The stack is setup in a way we can write to the page table entry any arbtriary value we want, hence we change the permissions of a kernel pages and execute our code as supervisor :3
-(We have a pointer for each byte and the corresponding address)
+<p>Luckily for us we have a bunch of debug values on the stack, some of them might be incredibly useful to craft an exploit. <strong><em>Yes!</em></strong> The stack is setup in a way we can write to the page table entry any arbtriary value we want, hence we change the permissions of a kernel pages and execute our code as supervisor :3
+(We have a pointer for each byte and the corresponding address)</p>
 
-Since we have to fully comperhend the paging mechanism in full detail to execute this exploit properly, here's a diagram of the Page Table Entry structure:</p>
+<p>Since we have to fully comperhend the paging mechanism in full detail to execute this exploit properly, here&#8217;s a diagram of the Page Table Entry structure:</p>
 
 <p><img src="./static/img/softmmu/pte.png" style="width:70%"></p>
 
 <p>There are many bits and flops, but assuming basic knowledge of paging nothing is too out of ordinary. The first three flags are interesting: P (<strong>P</strong>resent), R/W (<strong>R</strong>ead/<strong>W</strong>rite) and U/S (<strong>U</strong>ser/<strong>S</strong>upervisor).
-If the <strong>P</strong>resent bit is set then the page is actually in physical memory at the moment, if the <strong>R</strong>ead and <strong>W</strong>rite bit is set then the page is both readable and writable (if not then it is read only) and lastly the <strong>U</strong>Ser/<strong>S</strong>upervisor bit is set based on privellege level.
+If the <strong>P</strong>resent bit is set then the page is actually in physical memory at the moment, if the <strong>R</strong>ead and <strong>W</strong>rite bit is set then the page is both readable and writable (if not then it is read only) and lastly the <strong>U</strong>Ser/<strong>S</strong>upervisor bit is set based on privellege level.</p>
 
-We can get to work on patching the bytes of the PTE, we are able to patch one of our userspace page entries to pount to a physical adress that contains the kernel code of sys_setresuid() and make it writable. Once we got that we can flip the prillege check from je to jne, call setresuid(0) and obtain root &gt;:3</p>
+<p>We can get to work on patching the bytes of the PTE, we are able to patch one of our userspace page entries to pount to a physical adress that contains the kernel code of sys_setresuid() and make it writable. Once we got that we can flip the prillege check from je to jne, call setresuid(0) and obtain root &gt;:3</p>
 
-<pre><code>/ $ base64 -d | gunzip - &gt; /tmp/x &amp;&amp; chmod +x /tmp/x &amp;&amp; /tmp/x
+<pre><code class="shell">/ $ base64 -d | gunzip - &gt; /tmp/x &amp;&amp; chmod +x /tmp/x &amp;&amp; /tmp/x
 &lt; ... &gt;
 {CENSORED_FLAG}
 / # whoami
@@ -218,9 +219,9 @@ We can get to work on patching the bytes of the PTE, we are able to patch one of
 
 <h2 id="conclusions">Conclusions</h2>
 
-<p>This without a doubt is a serious challenge full of hurdles. Personally for me it symbolizes some sort of maturity in my cybersecurity journey, I learned so much throughout and I can't wait to do more.
+<p>This without a doubt is a serious challenge full of hurdles. Personally for me it symbolizes some sort of maturity in my cybersecurity journey, I learned so much throughout and I can&#8217;t wait to do more.</p>
 
-About the softmmu itself, this post only showed the a small part of the failures. So much stuff I first tried didn't end up working at the end, this only shows how deep and complex it gets. I believe it is a prime example of diving deep and reading old documentation about the kernel's inner workings and trying to figure it all out.</p>
+<p>About the softmmu itself, this post only showed the a small part of the failures. So much stuff I first tried didn&#8217;t end up working at the end, this only shows how deep and complex it gets. I believe it is a prime example of diving deep and reading old documentation about the kernel&#8217;s inner workings and trying to figure it all out.</p>
 
 <p><img src="./static/img/softmmu/softmmu_completed.png" style="width:20%"></p>
 

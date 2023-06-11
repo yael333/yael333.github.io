@@ -4,4 +4,4 @@ customize it how you want !
 => /index.md Home
 
 ------------------------------------------------------------------
-=> gemini://perso.pw/blog//articles/rustpatterns.gmi 2023-05-16 Why I love Rust: Pattern Matching
+=> gemini://localhost/articles/rustpatterns.gmi 2023-05-16 Why I love Rust: Pattern Matching
