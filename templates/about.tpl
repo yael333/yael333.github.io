@@ -1,4 +1,9 @@
+    <pre> _  _  __   ___  __      __    ___  ___  ____ 
+( \/ )(  ) (  _)(  )    (  )  (  _)(  _)(_  _)
+ \  / /__\  ) _) )(__    )(__  ) _) ) _)  )(  
+(__/ (_)(_)(___)(____)  (____)(___)(___) (__) </pre>
         <p>
+      
       welcome to my digital grimoire! i'm a young witch in training, a cybersec enthusiast, and an avid supporter of free software. i'm also a firm believer in the power of cats, music, and esotericism - because let's be real, who doesn't love a good dose of magic in their lives?
       <br><br>
       as you wander through my website, you'll find that most of my work is self-driven, with a focus on linux, cybersecurity, and retro computing.<br><br>

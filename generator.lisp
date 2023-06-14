@@ -95,6 +95,12 @@
                     (if left-separator-position (+ 1 left-separator-position) 0)
                     (- count 1))))))
 
+(defun pad-string (original max-count pad-char)
+  (if (> max-count (length original))
+      (concatenate 'string original 
+                   (make-string (- max-count (length original)) :initial-element pad-char))
+      original))
+
 ;; load a file as a string
 ;; we escape ~ to avoid failures with format
 (defun load-file(path)
@@ -255,7 +261,10 @@
         (template "%%Date%%"   (date-format (getf *config* (if title-only :date-format-title :date-format))
                                     (article-date article)))
        (template "%%Raw-Date%%" (article-rawdate article))
+       (template "%%Padded-Space%%"  (pad-string " " (- 82 (length (article-title article))) #\─))
+       (template "%%Padded-Space2%%"  (pad-string "" (- 96 (length (article-tiny article))) #\SPACE))
        (template "%%Title%%"  (article-title article))
+       (template "%%Tiny%%"  (article-tiny article))
        (template "%%Id%%"     (article-id article))
        (template "%%Tags%%"   (get-tag-list-article article))
        (template "%%About-Short%%"   (load-file "templates/about-short.tpl"))
@@ -365,7 +374,7 @@
   (generate "output/html/index.html" (generate-semi-mainpage))
 
   ;; produce index-titles.html where there are only articles titles
-  (generate "output/html/index-titles.html" (generate-semi-mainpage :no-text nil :tiny nil :title-only nil :year-title nil))
+  (generate "output/html/index-titles.html" (generate-semi-mainpage :no-text nil :tiny t :title-only nil :year-title nil))
 
   ;; produce index file for each tag
   (loop for tag in (articles-by-tag) do

@@ -53,12 +53,15 @@
 
 ;; rust patterns post
 (post :title "Why I love Rust: Pattern Matching"
+      :tiny "Rusted Love <3"
       :id "rustpatterns" :date "20230516" :tag "rust software-design")
 
 ;; persistence post
 (post :title "Demonstration of Malware Persistence through Microsoft Internet Explorer"
+      :tiny "Browser hell \\0/"
       :id "iepersistence" :date "20230514" :tag "malware persistence windows")
 
 ;; softmmu post
 (post :title "pwnable.kr's softmmu - An Awesome Linux Kernel Exploit"
+      :tiny "An important milestone"
       :id "softmmu" :date "20230212" :tag "linux-kernel pwn ctf")

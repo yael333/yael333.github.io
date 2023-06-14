@@ -84,6 +84,9 @@ article > header > h1 > a {
     background-color: var(--color-shadow);
 	text-decoration: underline;
 }
+pre {
+    font-family: var(--font-family-main);
+}
 /* ====================================================== */
 /* A basic style for          	                     code */
 /* ====================================================== */
