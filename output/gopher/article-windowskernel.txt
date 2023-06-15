@@ -24,6 +24,7 @@ It's ever growing <3
 # Vulenrable Drivers
 [Physmem Drivers](https://github.com/namazso/physmem_drivers)
 
+[Screwed Drivers](https://github.com/eclypsium/Screwed-Drivers/tree/master)
 # Bootkits
 [EfiGuard](https://github.com/Mattiwatti/EfiGuard)
 
