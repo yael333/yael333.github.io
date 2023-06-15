@@ -6,6 +6,45 @@
     <link>https://yaelsgrimoire.dev/</link>
     <atom:link href="https://yaelsgrimoire.dev/rss.xml" rel="self" type="application/rss+xml" />
     <item>
+  <title>Window Kernel Resources</title>
+  <description>
+    <![CDATA[
+<p>Recently I&#8217;ve been putting all of my efforts into learning Window Internals and it&#8217;s kernel, this list is for personal archive purposes~
+It&#8217;s ever growing &lt;3</p>
+
+<p><a href="https://fuzzysecurity.com/tutorials.html">FuzzySecurity&#8217;s Internals series</a></p>
+
+<p><a href="https://github.com/hacksysteam/HackSysExtremeVulnerableDriver">HackSysExtremeVulenrableDriver</a></p>
+
+<h1 id="tools">Tools</h1>
+
+<p><a href="http://virtualkd.sysprogs.org/">VirtualKD</a></p>
+
+<p><a href="https://www.osronline.com/article.cfm?article=157">OSR Driver Loader</a></p>
+
+<h1 id="writeups">Writeups</h1>
+
+<p><a href="https://h0mbre.github.io/RyzenMaster_CVE/">CVE&#8211;2020&#8211;12928 Exploit Proof-of-Concept</a></p>
+
+<p><a href="https://connormcgarr.github.io/cve-2020-21551-sploit/">CVE&#8211;2021&#8211;21551 - Dell ‘dbutil_2_3.sys’</a></p>
+
+<h1 id="vulenrabledrivers">Vulenrable Drivers</h1>
+
+<p><a href="https://github.com/namazso/physmem_drivers">Physmem Drivers</a></p>
+
+<h1 id="bootkits">Bootkits</h1>
+
+<p><a href="https://github.com/Mattiwatti/EfiGuard">EfiGuard</a></p>
+
+<p><a href="https://github.com/memN0ps/bootkit-rs">bootkit-rs</a></p>
+
+    ]]>
+  </description>
+  <guid>gopher://localhost:7070/0.//article-windowskernel.txt</guid>
+  <link>gopher://localhost:7070/0.//article-windowskernel.txt</link>
+  <pubDate>Thu, 15 Jun 2023 00:00:00 GMT</pubDate>
+</item>
+<item>
   <title>Why I love Rust: Pattern Matching</title>
   <description>
     <![CDATA[
@@ -224,79 +263,6 @@ I hope you now understand pattern matching a little better and see how it is a f
   <guid>gopher://localhost:7070/0.//article-rustpatterns.txt</guid>
   <link>gopher://localhost:7070/0.//article-rustpatterns.txt</link>
   <pubDate>Tue, 16 May 2023 00:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>Demonstration of Malware Persistence through Microsoft Internet Explorer</title>
-  <description>
-    <![CDATA[
-<p>One of the controversial concerns with Microsoft&#8217;s smash hit Windows is the bloat in software and features. It is a focal point point in malware targeting, abusing poorly designed systems and preying on it&#8217;s huge userbase.</p>
-
-<p>All of it undeniably ties in into The Browser Wars Microsoft found themselves in, all tech corps trying to shill their spyware packaged with an open-source web browser engine. Besides my serious non important opinions on the matter, I think we&#8217;re all familiar with Internet Explorer, an old piece of tech that still comes packaged on all Windows systems and is damn near impossible to get rid off.</p>
-
-<p>Per usual, let&#8217;s try to abuse the fact it is so atomic to Window&#8217;s user experience and try to achieve some sort of malware persistence.
-I opened procmon from the sysinternals utilities suite looking for potential DLL injections, in the case IE tries to load non existent / or creates it&#8217;s own DLLs we&#8217;re able to intervene and load our &#8220;malicious&#8221; ones.
-Using these filters, we can look for specific kinds of DLLs that only exist on runtime:</p>
-
-<figure>
-<img src="./static/img/iepersistence/filters.png" alt="" />
-</figure>
-
-<p>Let&#8217;s open the executable and observe :3</p>
-
-<figure>
-<img src="./static/img/iepersistence/launch.png" alt="" />
-</figure>
-
-<p>So many&#8230; We need to look for files that are used exclusively by IE, one that came up that has a readable and non suspicious name is suspend.dll.</p>
-
-<p>Here&#8217;s a &#8220;malicious&#8221; DLL we can use to emulate code execution needed for persistence, a real malware would hide here persistent code.</p>
-
-<pre><code class="c">#include &lt;windows.h&gt;
-#include &quot;pch.h&quot;
-#pragma comment (lib, &quot;user32.lib&quot;)
-
-BOOL APIENTRY DllMain(HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved) {
-    switch (ul_reason_for_call) {
-    case DLL_PROCESS_ATTACH:
-        MessageBox(
-            NULL,
-            L&quot;you just got pwned~&quot;,
-            L&quot;/ᐠ. ᴗ.ᐟﾉ&quot;,
-            MB_OK
-        );
-        break;
-    case DLL_PROCESS_DETACH:
-        break;
-    case DLL_THREAD_ATTACH:
-        break;
-    case DLL_THREAD_DETACH:
-        break;
-    }
-    return TRUE;
-}
-
-</code></pre>
-
-<p>Time for compilation, I will use Visual Studio&#8217;s built in solutions although it is fairly flexible.
-After it&#8217;s done, we need to put it where IE loads it from and rename it to solution.dll:</p>
-
-<p><img src="./static/img/iepersistence/cp.png" alt="" />
-<img src="./static/img/iepersistence/pwn.png" alt="" /></p>
-
-<h3 id="wowwegotourpwn">WOW, we got our pwn~</h3>
-
-<p>Our code got executed and then Internet Explorer launched per normal. This is pretty pretty cool&#8230;</p>
-
-<p><em>What can we take away from this?</em> </p>
-
-<p>While this particular proof of concept has been patched somewhere last year, I believe it holds a lot of relevancy in practices of persistence and malware design as a whole.
-Looking for fundemental features Microsoft doesn&#8217;t want to get rid off (nor can&#8217;t) and find flaws in their behaviour is a cornerstone in this field. In addition, DLL injection in this way is incredibly simple yet demonstrates understanding of Windows Internals.</p>
-
-    ]]>
-  </description>
-  <guid>gopher://localhost:7070/0.//article-iepersistence.txt</guid>
-  <link>gopher://localhost:7070/0.//article-iepersistence.txt</link>
-  <pubDate>Sun, 14 May 2023 00:00:00 GMT</pubDate>
 </item>
 <item>
   <title>pwnable.kr's softmmu - An Awesome Linux Kernel Exploit</title>

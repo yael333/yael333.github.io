@@ -1,7 +1,7 @@
 Title: pwnable.kr's softmmu - An Awesome Linux Kernel Exploit
 Author: Yael
 Date: 12 February 2023
-Tags: linux-kernel pwn ctf
+Tags: linux-kernel kernel linux pwn ctf
 ============
 
 Over the years of my CTF'ing I always come back to [pwnable.kr](https://pwnable.kr), although a tad outdated it's a vast source of simply awesome binary exploitation and pwn challanges. In particular their kernel exploitation series of challanges interest me - they're really well made and good introductory material on the matter. Per the policies on the site, this writeup won't share any source code and try to be minimal as possible.

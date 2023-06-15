@@ -1,0 +1,30 @@
+Title: Window Kernel Resources
+Author: Yael
+Date: 15 June 2023
+Tags: windows-interals window-kernel kernel pwn
+============
+
+Recently I've been putting all of my efforts into learning Window Internals and it's kernel, this list is for personal archive purposes~
+It's ever growing <3
+
+[FuzzySecurity's Internals series](https://fuzzysecurity.com/tutorials.html)
+
+[HackSysExtremeVulenrableDriver](https://github.com/hacksysteam/HackSysExtremeVulnerableDriver)
+
+# Tools
+[VirtualKD](http://virtualkd.sysprogs.org/)
+
+[OSR Driver Loader](https://www.osronline.com/article.cfm?article=157)
+
+# Writeups
+[CVE-2020-12928 Exploit Proof-of-Concept](https://h0mbre.github.io/RyzenMaster_CVE/)
+
+[CVE-2021-21551 - Dell ‘dbutil_2_3.sys’](https://connormcgarr.github.io/cve-2020-21551-sploit/)
+
+# Vulenrable Drivers
+[Physmem Drivers](https://github.com/namazso/physmem_drivers)
+
+# Bootkits
+[EfiGuard](https://github.com/Mattiwatti/EfiGuard)
+
+[bootkit-rs](https://github.com/memN0ps/bootkit-rs)
