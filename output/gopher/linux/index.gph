@@ -1,7 +1,7 @@
-hi i'm yael~! i'm a young witch in training, a cybersec enthusiast, and an avid supporter of free software.
+hi i'm yael~! i'm an 18 years old gal from israel, a cybersec enthusiast, and an avid supporter of free software.
 i'm also a firm believer in the power of cats, music, and esotericism - because let's be real, who doesn't love a good dose of magic in their lives?
 
-as you wander through my website, you'll find that most of my work is self-driven, with a focus on linux, cybersecurity, and retro computing.
+as you wander through my website, you'll find that most of my work is self-driven, with a focus on operating systems, cybersecurity, and retro computing.
 
 some of my current programming interests at the momemnt are:
 ~ binary exploitation (kernel level specifically)
@@ -12,7 +12,7 @@ some of my current programming interests at the momemnt are:
 
 you can find me here:
 > GitHub (https://github.com/konata-chan404)
-> LinkedIn (https://www.linkedin.com/in/yael-bar-akiva/)
+> Mastodon (https://mastodon.sdf.org/@yaell33t)
 > PGP: 7B5B 52F5 4D41 D77B (subkey 6522 207F B4DE 5AEB)
 
             |\      _,,,---,,_

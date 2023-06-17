@@ -1,0 +1,11 @@
+Title: LOBFS - Library of Babel File System
+Author: Yael
+Date: 17 June 2023
+Tags: golang literature
+============
+
+Blog post coming soon~
+
+
+
+Project can be found [here](https://github.com/konata-chan404/LOBFS)

@@ -6,6 +6,20 @@
     <link>https://yaelsgrimoire.dev/</link>
     <atom:link href="https://yaelsgrimoire.dev/rss.xml" rel="self" type="application/rss+xml" />
     <item>
+  <title>LOBFS - Library of Babel File System</title>
+  <description>
+    <![CDATA[
+<p>Blog post coming soon~</p>
+
+<p>Project can be found <a href="https://github.com/konata-chan404/LOBFS">here</a></p>
+
+    ]]>
+  </description>
+  <guid>https://yaelsgrimoire.dev/2023-06-17-lobfs.html</guid>
+  <link>https://yaelsgrimoire.dev/2023-06-17-lobfs.html</link>
+  <pubDate>Sat, 17 Jun 2023 00:00:00 GMT</pubDate>
+</item>
+<item>
   <title>Window Kernel Resources</title>
   <description>
     <![CDATA[
@@ -45,6 +59,37 @@ It&#8217;s ever growing &lt;3</p>
   <guid>https://yaelsgrimoire.dev/2023-06-15-windowskernel.html</guid>
   <link>https://yaelsgrimoire.dev/2023-06-15-windowskernel.html</link>
   <pubDate>Thu, 15 Jun 2023 00:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>New Website using cl-yag</title>
+  <description>
+    <![CDATA[
+<p>I commonly fall for what i call &#8220;Website Envy&#8221; - looking at other&#8217;s awesome sites and wanting mine to be just like that. So here&#8217;s a post detailing exactly that!</p>
+
+<h2 id="acyberspace">A Cyberspace</h2>
+
+<p>Recently I&#8217;ve tapped into the gopherspace, geminiverse and the World Wide Web as well. So many fun, interesting and downrigh beautiful webpages.
+I was always in favor of static generated websites, with no backend and little as of effort on the clientside and discovering a whole slew of pages pushing that agenda with great content has just opened my eyes.</p>
+
+<h2 id="cl-yag">cl-yag</h2>
+
+<p>My last website was built with <a href="https://jaspervdj.be/hakyll/">Hakyll</a>, a static site generator written and operating in Haskell. It&#8217;s a great piece of software that highlights the declartive nature of functionl programming and how to leverage it using real applications. In my adventures I came across <a href="https://dataswamp.org/~solene/">Solene&#8217;s site</a>, a great hub of general computing, OpenBSD and NixOS. It&#8217;s design was minimal and elegant, yet robust enough to host plenty of content.</p>
+
+<p>I decided to take her project <code>cl-yag</code> and use it for my own site - after a bit of lisp hacks it is now complete. You&#8217;re probably reading on it right now as well (Apologies reader futures after the inevitable changes).</p>
+
+<h2 id="gophergemini">Gopher &amp; Gemini</h2>
+
+<p>These protocols were first class requirements for my new website, although as of right now I don&#8217;t have a gopher or a gemini server running there&#8217;s full support for it. I can&#8217;t wait to join y&#8217;all in a bit~</p>
+
+<h2 id="thoughts">Thoughts</h2>
+
+<p>The modern web has consumed and taken from us so much, but I&#8217;m so happy there&#8217;s a niche for this still. I absolutely adore this kind of stuff and I&#8217;m glad I could add my website to this niche in the cyberspace.</p>
+
+    ]]>
+  </description>
+  <guid>https://yaelsgrimoire.dev/2023-06-10-cl-yag.html</guid>
+  <link>https://yaelsgrimoire.dev/2023-06-10-cl-yag.html</link>
+  <pubDate>Sat, 10 Jun 2023 00:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Why I love Rust: Pattern Matching</title>

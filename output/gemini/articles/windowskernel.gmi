@@ -1,7 +1,7 @@
 Title : Window Kernel Resources
 Author: Yael
 Date  : 15 June 2023
-Tags  : windows-interals window-kernel kernel pwn
+Tags  : windows-interals window-kernel kernel pwn notes
 
 Recently I've been putting all of my efforts into learning Window Internals and it's kernel, this list is for personal archive purposes~
 It's ever growing <3

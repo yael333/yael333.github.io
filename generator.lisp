@@ -368,10 +368,12 @@
 					(article-date article))
 			   (article-id article))
 		   (create-article article :tiny nil)
-		   :title (concatenate 'string (getf *config* :title) " : " (article-title article))))
+		   :title (concatenate 'string (getf *config* :title) " ~ " (article-title article))))
 
   ;; produce index.html
   (generate "output/html/index.html" (generate-semi-mainpage))
+
+  (generate "output/html/404.html" (load-file "templates/404.tpl"))
 
   ;; produce index-titles.html where there are only articles titles
   (generate "output/html/index-titles.html" (generate-semi-mainpage :no-text nil :tiny t :title-only nil :year-title nil))

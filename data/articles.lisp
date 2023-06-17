@@ -51,10 +51,21 @@
 ;; :tiny    can be omitted.   If so, the article's full text gets displayed on the all-articles view. (most people don't want this.)
 
 
-;; rust patterns post
+;; library of babel filesystem
+(post :title "LOBFS - Library of Babel File System"
+      :tiny "Infinite ephemeral knowledge~"
+      :id "lobfs" :date "20230617" :tag "golang literature")
+
+;; window kernel resources
 (post :title "Window Kernel Resources"
-      :tiny "Not for faint of heart"
-      :id "windowskernel" :date "20230615" :tag "windows-interals window-kernel kernel pwn")
+      :tiny "personal notes ~ not for faint of heart"
+      :id "windowskernel" :date "20230615" :tag "windows-interals window-kernel kernel pwn notes")
+
+;; cl-yag rewrite
+(post :title "New Website using cl-yag"
+      :tiny "Static website generator written in pure Common Lisp"
+      :id "cl-yag" :date "20230610" :tag "lisp this-website web")
+
 
 ;; rust patterns post
 (post :title "Why I love Rust: Pattern Matching"
@@ -68,5 +79,5 @@
 
 ;; softmmu post
 (post :title "pwnable.kr's softmmu - An Awesome Linux Kernel Exploit"
-      :tiny "An important milestone"
+      :tiny "An important milestone for me"
       :id "softmmu" :date "20230212" :tag "linux-kernel kernel linux pwn ctf")
