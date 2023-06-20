@@ -1,11 +1,11 @@
-    <pre> _  _  __   ___  __      __    ___  ___  ____ 
+<pre> _  _  __   ___  __      __    ___  ___  ____ 
 ( \/ )(  ) (  _)(  )    (  )  (  _)(  _)(_  _)
  \  / /__\  ) _) )(__    )(__  ) _) ) _)  )(  
 (__/ (_)(_)(___)(____)  (____)(___)(___) (__) </pre>
         <p>
       
-      hiiii i'm yael~! i'm an 18 years old gal from israel.<br>
-      i'm a cybersec enthusiast and an avid supporter of free software. i believe firmly in the power of cats, music, and esotericism - because let's be real, who doesn't love a good dose of magic in their lives?
+      hiii i'm yael~! i'm an 18 years old from israel, a cybersec enthusiast, and an avid supporter of free software.<br>
+      i believe firmly in the power of cats, music, and esotericism.
       <br><br>
       most of my work is self-driven, with a focus on operating systems, cybersecurity, and retro computing.<br><br>
       some of my current programming interests at the momemnt are:<br>

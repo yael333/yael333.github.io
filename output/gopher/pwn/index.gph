@@ -1,5 +1,5 @@
 hi i'm yael~! i'm an 18 years old gal from israel, a cybersec enthusiast, and an avid supporter of free software.
-i'm also a firm believer in the power of cats, music, and esotericism - because let's be real, who doesn't love a good dose of magic in their lives?
+i believe firmly in the power of cats, music, and esotericism.
 
 as you wander through my website, you'll find that most of my work is self-driven, with a focus on operating systems, cybersecurity, and retro computing.
 
