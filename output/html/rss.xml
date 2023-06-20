@@ -3,8 +3,8 @@
   <channel>
     <title>ᛟYael</title>
     <description>Yael's Digital Grimoire</description>
-    <link>https://yaelsgrimoire.dev/</link>
-    <atom:link href="https://yaelsgrimoire.dev/rss.xml" rel="self" type="application/rss+xml" />
+    <link>https://anti.moe/~~yael</link>
+    <atom:link href="https://anti.moe/~~yaelrss.xml" rel="self" type="application/rss+xml" />
     <item>
   <title>LOBFS - Library of Babel File System</title>
   <description>
@@ -15,8 +15,8 @@
 
     ]]>
   </description>
-  <guid>https://yaelsgrimoire.dev/2023-06-17-lobfs.html</guid>
-  <link>https://yaelsgrimoire.dev/2023-06-17-lobfs.html</link>
+  <guid>https://anti.moe/~~yael2023-06-17-lobfs.html</guid>
+  <link>https://anti.moe/~~yael2023-06-17-lobfs.html</link>
   <pubDate>Sat, 17 Jun 2023 00:00:00 GMT</pubDate>
 </item>
 <item>
@@ -56,8 +56,8 @@ It&#8217;s ever growing &lt;3</p>
 
     ]]>
   </description>
-  <guid>https://yaelsgrimoire.dev/2023-06-15-windowskernel.html</guid>
-  <link>https://yaelsgrimoire.dev/2023-06-15-windowskernel.html</link>
+  <guid>https://anti.moe/~~yael2023-06-15-windowskernel.html</guid>
+  <link>https://anti.moe/~~yael2023-06-15-windowskernel.html</link>
   <pubDate>Thu, 15 Jun 2023 00:00:00 GMT</pubDate>
 </item>
 <item>
@@ -87,8 +87,8 @@ I was always in favor of static generated websites, with no backend and little a
 
     ]]>
   </description>
-  <guid>https://yaelsgrimoire.dev/2023-06-10-cl-yag.html</guid>
-  <link>https://yaelsgrimoire.dev/2023-06-10-cl-yag.html</link>
+  <guid>https://anti.moe/~~yael2023-06-10-cl-yag.html</guid>
+  <link>https://anti.moe/~~yael2023-06-10-cl-yag.html</link>
   <pubDate>Sat, 10 Jun 2023 00:00:00 GMT</pubDate>
 </item>
 <item>
@@ -307,8 +307,8 @@ I hope you now understand pattern matching a little better and see how it is a f
 
     ]]>
   </description>
-  <guid>https://yaelsgrimoire.dev/2023-05-16-rustpatterns.html</guid>
-  <link>https://yaelsgrimoire.dev/2023-05-16-rustpatterns.html</link>
+  <guid>https://anti.moe/~~yael2023-05-16-rustpatterns.html</guid>
+  <link>https://anti.moe/~~yael2023-05-16-rustpatterns.html</link>
   <pubDate>Tue, 16 May 2023 00:00:00 GMT</pubDate>
 </item>
 <item>
@@ -503,8 +503,8 @@ If the <strong>P</strong>resent bit is set then the page is actually in physical
 
     ]]>
   </description>
-  <guid>https://yaelsgrimoire.dev/2023-02-12-softmmu.html</guid>
-  <link>https://yaelsgrimoire.dev/2023-02-12-softmmu.html</link>
+  <guid>https://anti.moe/~~yael2023-02-12-softmmu.html</guid>
+  <link>https://anti.moe/~~yael2023-02-12-softmmu.html</link>
   <pubDate>Sun, 12 Feb 2023 00:00:00 GMT</pubDate>
 </item>
 

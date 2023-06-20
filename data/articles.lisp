@@ -8,7 +8,7 @@
    :webmaster       "Yael"
    :title           "ᛟYael"
    :description     "Yael's Digital Grimoire"
-   :url             "https://yaelsgrimoire.dev/"        ;; the trailing slash is mandatory! RSS links will fail without it. Notice the '~~' to produce a literal '~'
+   :url             "https://anti.moe/~~yael"        ;; the trailing slash is mandatory! RSS links will fail without it. Notice the '~~' to produce a literal '~'
    :rss-item-number 10                                  ;; limit total amount of items in RSS feed to 10
    :date-format "%DayNumber %MonthName %Year"           ;; format for date %DayNumber %DayName %MonthNumber %MonthName %Year
    :date-format-title "%DayNumber-%MonthNumber-%Year"   ;; format for date %DayNumber %DayName %MonthNumber %MonthName %Year

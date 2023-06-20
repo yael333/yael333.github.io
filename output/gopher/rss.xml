@@ -3,8 +3,8 @@
   <channel>
     <title>ᛟYael</title>
     <description>Yael's Digital Grimoire</description>
-    <link>https://yaelsgrimoire.dev/</link>
-    <atom:link href="https://yaelsgrimoire.dev/rss.xml" rel="self" type="application/rss+xml" />
+    <link>https://anti.moe/~~yael</link>
+    <atom:link href="https://anti.moe/~~yaelrss.xml" rel="self" type="application/rss+xml" />
     <item>
   <title>LOBFS - Library of Babel File System</title>
   <description>
