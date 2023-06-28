@@ -12,7 +12,7 @@ dirs:
 
 
 clean:
-	rm -fr output/html/* output/gopher/* "temp"
+	rm -fr output/html/* output/gopher/* output/gemini/* "temp"
 
 css:
 	mkdir -p "output/html/static"

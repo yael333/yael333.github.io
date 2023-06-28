@@ -1,8 +1,0 @@
-Title : My first post
-Author: Solène
-Date  : 29 April 2016
-Tags  : pony
-
-This contains the text of the article with id 1.
-
-It has two paragraphs and is displayed on the homepage.

@@ -50,6 +50,10 @@
 ;; :author  can be omitted.   If so, it's value gets replaced by the value of :webmaster.
 ;; :tiny    can be omitted.   If so, the article's full text gets displayed on the all-articles view. (most people don't want this.)
 
+;; library of babel filesystem
+(post :title "Google CTF 2021 - Memsaftey"
+      :tiny "Sandbox escape gone wrong"
+      :id "memsafety" :date "20230628" :tag "rust ctf")
 
 ;; library of babel filesystem
 (post :title "LOBFS - Library of Babel File System"

