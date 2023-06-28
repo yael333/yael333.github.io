@@ -3,7 +3,7 @@ Lately I've been quite busy with IRL stuff and most of my computer stuff has bee
 Although it made me reminscent of an older challange that was presented two years ago in Google CTF 2021: ``memsafety``
 
 ## Background
-Going back 2 years ago is quite wild, I was a bored high school barely surviving *the pandemic*. Back then I was much much less skilled, as it was one of my first ever CTF's. Me and [my friend](https://tzlil.net) competed and managed to complete around 2-3 challanges, honestly more than we anticipated and looking back at it was quite impressive ><
+Going back 2 years ago is quite wild, I was a bored high schooler barely surviving *the pandemic*. Back then I was much much less skilled, as it was one of my first ever CTF's. Me and [my friend](https://tzlil.net) competed and managed to complete around 2-3 challanges, honestly more than we anticipated and looking back at it was quite impressive ><
 
 This is the story about the most memorable challange we solved.
 
