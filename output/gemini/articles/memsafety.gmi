@@ -1,4 +1,4 @@
-Title : Google CTF 2021 - Memsaftey
+Title : Google CTF 2021 - Memsafety
 Author: Yael
 Date  : 28 June 2023
 Tags  : rust ctf

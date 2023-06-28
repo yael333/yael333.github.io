@@ -51,7 +51,7 @@
 ;; :tiny    can be omitted.   If so, the article's full text gets displayed on the all-articles view. (most people don't want this.)
 
 ;; library of babel filesystem
-(post :title "Google CTF 2021 - Memsaftey"
+(post :title "Google CTF 2021 - Memsafety"
       :tiny "Sandbox escape gone wrong"
       :id "memsafety" :date "20230628" :tag "rust ctf")
 
