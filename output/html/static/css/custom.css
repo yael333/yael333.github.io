@@ -4,14 +4,15 @@
 
 :root {
     --font-family-main: tewi, sans-serif;
-    --color-main: #f4e8ba;
-    --color-background: #282828;
-    --color-link: #b8bb26;
-    --color-header: #79740e;
-    --color-shadow: #12120d;
+    --color-main: #bbbbbb;
+    --color-background: #1c2836;
+    --color-link: #1e9ee6;
+    --color-header: #3978bb;
+    --color-shadow: #bbbbbb; 
 
-    --color-code-fg: #282828;
-    --color-code-bg: #ecdfb4;
+
+    --color-code-fg: #bbbbbb;
+    --color-code-bg: #293c53;
 }
 
 /* ==================================================================== */
