@@ -1,14 +1,14 @@
 Lately I've been quite busy with IRL stuff and most of my computer stuff has been dedicated to CTF's - latest of which was Google CTF 2023. It was a great amount of fun and there are posts in the works about it already~
 
-Although it made me reminscent of an older challange that was presented two years ago in Google CTF 2021: ``memsafety``
+Although it made me reminiscent of an older challenge that was presented two years ago in Google CTF 2021: ``memsafety``
 
 ## Background
-Going back 2 years ago is quite wild, I was a bored high schooler barely surviving *the pandemic*. Back then I was much much less skilled, as it was one of my first ever CTF's. Me and [my friend](https://tzlil.net) competed and managed to complete around 2-3 challanges, honestly more than we anticipated and looking back at it was quite impressive ><
+Going back 2 years ago is quite wild, I was a bored high schooler barely surviving *the pandemic*. Back then I was much much less skilled, as it was one of my first ever CTF's. Me and [my friend](https://tzlil.net) competed and managed to complete around 2-3 challenges, honestly more than we anticipated and looking back at it was quite impressive ><
 
-This is the story about the most memorable challange we solved.
+This is the story about the most memorable challenge we solved.
 
-## The Challange
-After a small analysis it appears this challange contains three of my favorite things of all times: pwn, sandbox escape and Rust~!
+## The Challenge
+After a small analysis it appears this challenge contains three of my favorite things of all times: pwn, sandbox escape and Rust~!
 
 Downloading the attachment archive linked on the website we get several files: a ``sources/`` Rust project directory and ``chal.py`` script:
 
@@ -44,7 +44,7 @@ Downloading the attachment archive linked on the website we get several files: a
 Scary at first but after a deeper look it isn't bad at all, let's start unpacking the Rust project.\
 It seems to be a sandboxing service that pulls programs from ``user-n/src/lib.rs`` and runs them with sandbox constraints defined in ``proc-sandbox/src/lib.rs``.
 
-First we should understand what is the sandboxing mechanism. looking at the code it seems to be walking through the AST of our service and denying unsafe expressions, FFI calls, external crate declerations and denial of access to several critical functions and macros. it is being exported as a procedural macro that will later be used on our service functions. On top of that laters we'll find that our services run in a non-std enviroment - oomf.
+First we should understand what is the sandboxing mechanism. looking at the code it seems to be walking through the AST of our service and denying unsafe expressions, FFI calls, external crate declarations and denial of access to several critical functions and macros. it is being exported as a procedural macro that will later be used on our service functions. On top of that laters we'll find that our services run in a non-std environment - oomf.
 
 ```rust
 use proc_macro::TokenStream;
@@ -96,7 +96,7 @@ pub mod user {
 The way the flag is allocated is incredibly weird though, it uses the ``ManuallyDrop`` trait - meaning the flag persists in memory after it gets out of scope (exits the function). This is a huge hint later down the line, perhaps we could leak values off the heap and leak the flag. Anyways, let's continue~
 
 In terms of the Rust program we're almost done. One last look at how the services get executed:
-Both services get first allocated and only then ran, meaning they're all simoustanly in scope and present in memory as they run, this only strengthens the theory we had earlier.
+Both services get first allocated and only then ran, meaning they're all simultaneously  in scope and present in memory as they run, this only strengthens the theory we had earlier.
 
 
 server/src/main.rs
@@ -137,7 +137,7 @@ def main():
 
 It first takes our user input, writes it to our rust project (assumingly in ``user-0/src/lib.rs``), builds it, checks the input and then runs the service if it's valid.
 
-Two important limitations the app presents is that our code gets written inside a sandboxed service (meaning all of the AST sandboxign applies), and there's a check in the ``check_user_input()`` for module escaping:
+Two important limitations the app presents is that our code gets written inside a sandboxed service (meaning all of the AST sandboxing applies), and there's a check in the ``check_user_input()`` for module escaping:
 
 ```py
         if len(ast["module"]["items"]) != 5:
@@ -145,10 +145,10 @@ Two important limitations the app presents is that our code gets written inside 
             sys.exit(1)
 ```
 
-## Our Unintented Soltuion
+## Our Unintended Solution
 We were a tad overwhelmed at first although there was something that stuck out like a sore thumb to us, the control flow on the python on script. Why include AST checks in it when you have the rust sandboxing module, and why after you first build the program??? 
 
-Scouring through it we found our first vulnerability in the code present in ``write_to_rs()``, it seems to just insert our code into the file without any brackets escpaing checks:
+Scouring through it we found our first vulnerability in the code present in ``write_to_rs()``, it seems to just insert our code into the file without any brackets escaping checks:
 
 ```py
 def write_to_rs(contents):
@@ -167,7 +167,7 @@ def write_to_rs(contents):
         fd.write("\n}\n")
 ```
 
-this means we can write code that escapes the sandboxed rust module by satisfying the service traint, closing the mod with a bracket  and creating our own with an unclosed bracket at the end (which will get appended by the script later)
+this means we can write code that escapes the sandboxed rust module by satisfying the service trait, closing the mod with a bracket  and creating our own with an unclosed bracket at the end (which will get appended by the script later)
 
 ```rust
     // boilerplate code
