@@ -44,7 +44,7 @@ let (x, y) = (1, 2);
 let Ok(x) = string.parse::&lt;i32&gt;() // parsing a string will return a Result&lt;T&gt;, and it is refutable whether it's an OK(x)
 </code></pre>
 
-<p>if let statements on the other hand can have refutable patterns, as the body is evaulated conditionally and it&#8217;s refutability is inherent:</p>
+<p>if let statements on the other hand can have refutable patterns, as the body is evaluated conditionally and it&#8217;s refutability is inherent:</p>
 
 <pre><code class="rust">if let Ok(x) = string.parse::&lt;i32&gt;() {
   // ... do something if string can be parsed as a 32 bit integer ...
@@ -90,7 +90,7 @@ let (..., middle, ...) = big_tuple;
 
 <h3 id="structs">Structs</h3>
 
-<p>Structs are not much different than tuples, i&#8217;ll save your internet bandwidth by not showing an example although it is very self explanatory. The only difference is the .. behaviour, when deconstructing it has to come last and it means to match the rest and ignore the result.</p>
+<p>Structs are not much different than tuples, I&#8217;ll save your internet bandwidth by not showing an example although it is very self explanatory. The only difference is the .. behaviour, when deconstructing it has to come last and it means to match the rest and ignore the result.</p>
 
 <h3 id="enums">Enums</h3>
 

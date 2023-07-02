@@ -19,7 +19,7 @@ let (x, y) = (1, 2);
 let Ok(x) = string.parse::<i32>() // parsing a string will return a Result<T>, and it is refutable whether it's an OK(x)
 ```
 
-if let statements on the other hand can have refutable patterns, as the body is evaulated conditionally and it's refutability is inherent:
+if let statements on the other hand can have refutable patterns, as the body is evaluated conditionally and it's refutability is inherent:
 
 ```rust
 if let Ok(x) = string.parse::<i32>() {
@@ -64,7 +64,7 @@ let (..., middle, ...) = big_tuple;
 (Patterns have to be unambigious)
 
 ### Structs
-Structs are not much different than tuples, i'll save your internet bandwidth by not showing an example although it is very self explanatory. The only difference is the .. behaviour, when deconstructing it has to come last and it means to match the rest and ignore the result.
+Structs are not much different than tuples, I'll save your internet bandwidth by not showing an example although it is very self explanatory. The only difference is the .. behaviour, when deconstructing it has to come last and it means to match the rest and ignore the result.
 
 ### Enums
 This might be the simplest yet most important of them all, the simplest case for enum deconstructing is to match one with no data:
