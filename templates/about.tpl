@@ -8,7 +8,7 @@
       i believe firmly in the power of cats, music, and esotericism.
       <br><br>
       most of my work is self-driven, with a focus on operating systems, cybersecurity, and retro computing.<br><br>
-      some of my current programming interests at the momemnt are:<br>
+      some of my current programming interests at the moment are:<br>
       ~ binary exploitation (kernel level specifically)<br>
       ~ windows internals and malware (Ü< VX >Ü)<br>
       ~ functional programming<br>
