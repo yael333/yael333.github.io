@@ -400,7 +400,7 @@ I was always in favor of static generated websites, with no backend and little a
   <title>Why I love Rust: Pattern Matching</title>
   <description>
     <![CDATA[
-<p>My journey with Rust has been rocky to say the least, from fandom to hating back to loving it, I never stopped learning about how I program and engineer. I&#8217;m a huge nerd of Functional Programming and the thing that absolutely sold me about rust is it&#8217;s algebric type system, it is my biggest joy to bring type proofness and complexity to low level programs. The pattern matching in it makes for expressive, readable and type-safe code. In this blog article we will take a look at this topic, and I hope you can learn something from it :3</p>
+<p>My journey with Rust has been rocky to say the least, from fandom to hating back to loving it, I never stopped learning about how I program and engineer. I&#8217;m a huge nerd of Functional Programming and the thing that absolutely sold me about rust is it&#8217;s algebraic type system, it is my biggest joy to bring type proofness and complexity to low level programs. The pattern matching in it makes for expressive, readable and type-safe code. In this blog article we will take a look at this topic, and I hope you can learn something from it :3</p>
 
 <h2 id="patterns">Patterns</h2>
 
@@ -458,11 +458,25 @@ let big_tuple = (1, 2, 3, 4, 5);
 let (..., middle, ...) = big_tuple;
 </code></pre>
 
-<p>(Patterns have to be unambigious)</p>
+<p>(Patterns have to be unambiguous)</p>
 
 <h3 id="structs">Structs</h3>
 
-<p>Structs are not much different than tuples, I&#8217;ll save your internet bandwidth by not showing an example although it is very self explanatory. The only difference is the .. behaviour, when deconstructing it has to come last and it means to match the rest and ignore the result.</p>
+<p>Destructuring structs is similar to tuples, we get the fields by their name instead of position. but we need to be mindful of the position of the .. when using it to match the rest of the fields.</p>
+
+<pre><code class="rust">struct Point {
+    x: i32,
+    y: i32,
+}
+
+fn main() {
+    let p = Point { x: 0, y: 7 };
+
+    let Point { x, y } = p;
+    assert_eq!(0, x);
+    assert_eq!(7, y);
+}
+</code></pre>
 
 <h3 id="enums">Enums</h3>
 
@@ -502,7 +516,7 @@ if let Enemy::Dead = my_enemy {
 
 <h2 id="otherpatterns">Other Patterns</h2>
 
-<p>There are other types of patterns in Rust that capture a lot of elementary and cool behaviour. Since they&#8217;re varied it is best to just demonstrate them:</p>
+<p>There are other types of patterns in Rust that capture a lot of elementary and cool behavior. Since they&#8217;re varied it is best to just demonstrate them:</p>
 
 <pre><code class="rust">// OR pattern
 
@@ -525,6 +539,102 @@ if let Point {x: my_x @ 1..=10, ..} = my_data {
     // my_x is between 1 and 10.
 }
 </code></pre>
+
+<h2 id="match">match</h2>
+
+<p>The match keyword in Rust is a versatile construct that enables exhaustive pattern matching and is often used to handle complex scenarios where multiple patterns need to be evaluated. It is especially valuable when dealing with enums and other algebraic data types that have several variants just as we shown earlier.</p>
+
+<p>Consider an example where we have an enum representing different types of messages that can be sent in a messaging application:</p>
+
+<pre><code class="rust">
+enum Message {
+    Text(String),
+    Image(Vec&lt;u8&gt;),
+    Audio(Vec&lt;u8&gt;),
+    Video(Vec&lt;u8&gt;),
+}
+</code></pre>
+
+<p>With match, we can easily handle each variant of the Message enum and perform specific actions based on the message type in a declarative and guaranteed manner:</p>
+
+<pre><code class="rust">
+fn process_message(msg: Message) {
+    match msg {
+        Message::Text(text) =&gt; println!(&quot;Received text message: {}&quot;, text),
+        Message::Image(data) =&gt; println!(&quot;Received image with size: {} bytes&quot;, data.len()),
+        Message::Audio(data) =&gt; println!(&quot;Received audio with size: {} bytes&quot;, data.len()),
+        Message::Video(data) =&gt; println!(&quot;Received video with size: {} bytes&quot;, data.len()),
+    }
+}
+</code></pre>
+
+<h2 id="errorhandlingandresultenum">Error Handling and Result Enum</h2>
+
+<p>Rust&#8217;s Result enum is widely used for error handling. It has two variants, Ok and Err, where Ok contains the successful result, and Err contains an error. Pattern matching provides an elegant way to handle both cases effectively.</p>
+
+<pre><code class="rust">
+fn divide(a: i32, b: i32) -&gt; Result&lt;i32, String&gt; {
+    if b == 0 {
+        return Err(&quot;Division by zero!&quot;.to_string());
+    }
+    Ok(a / b)
+}
+
+fn main() {
+    let result = divide(10, 2);
+    match result {
+        Ok(value) =&gt; println!(&quot;Result: {}&quot;, value),
+        Err(error) =&gt; println!(&quot;Error: {}&quot;, error),
+    }
+}
+</code></pre>
+
+<h2 id="matchingwithconditionspatternguards">Matching with Conditions (Pattern Guards)</h2>
+
+<p>Pattern guards can be used in conjunction with match to introduce additional conditions for pattern matching. This is particularly useful when we need to apply further filtering or evaluation on the matched values.</p>
+
+<pre><code class="rust">enum TransactionCategory {
+    Income,
+    Expense,
+    Unknown,
+}
+
+fn categorize_transaction(amount: f64) -&gt; TransactionCategory {
+    match amount {
+        a if a &gt; 0.0 =&gt; TransactionCategory::Income,
+        a if a &lt; 0.0 =&gt; TransactionCategory::Expense,
+        _ =&gt; TransactionCategory::Unknown,
+    }
+}
+
+</code></pre>
+
+<p>In this example, the pattern guards (if n % 2 == 0 and if n % 2 != 0) introduce conditions to check whether the number is even or odd, respectively. The match statement then handles each case accordingly.
+Exhaustive Pattern Matching</p>
+
+<p>One of the strengths of match is its ability to enforce exhaustive pattern matching, ensuring that all possible cases are handled explicitly. This makes it easier to catch potential bugs or missing cases during compilation rather than runtime. This helps us not guarantee but <em>prove</em> that our applications are consistent and complete. </p>
+
+<pre><code class="rust">
+enum Direction {
+    Up,
+    Down,
+    Left,
+    Right,
+}
+
+fn move_player(direction: Direction) {
+    match direction {
+        Direction::Up =&gt; println!(&quot;Moving player upwards.&quot;),
+        Direction::Down =&gt; println!(&quot;Moving player downwards.&quot;),
+        Direction::Left =&gt; println!(&quot;Moving player to the left.&quot;),
+        Direction::Right =&gt; println!(&quot;Moving player to the right.&quot;),
+    }
+}
+</code></pre>
+
+<p>In this example, if we were to add a new variant to the Direction enum without updating the match statement, the Rust compiler would raise a warning indicating that not all cases have been handled. This helps to catch potential oversights during development.</p>
+
+<p>The match case is a powerful tool that allows us the developers to handle and tame our codebases better. By leveraging the exhaustive nature of match, we&#8217;re can create more robust and reliable code, catching errors early in the development process and producing safer software.</p>
 
 <h2 id="thepayoff">The Payoff</h2>
 
@@ -580,7 +690,7 @@ public class Main {
 }
 </code></pre>
 
-<h3 id="rustpatternmatching:">Rust (Pattern Matching):</h3>
+<h3 id="rustpatternmatchingfp:">Rust (Pattern Matching / FP):</h3>
 
 <pre><code class="rust">enum Shape {
     Circle(f64),
@@ -607,8 +717,17 @@ fn main() {
 
 <h3 id="conclusions">Conclusions</h3>
 
-<p>I could go on about it for much longer, although I hope that was enough for the knowledge-hungry.
-I hope you now understand pattern matching a little better and see how it is a fundamental and powerful feature in Rust that contributes to its overall expressiveness and safety. Embracing it in my code greatly enchanced my programming exprience and generally leads to more robust and maintanable applications.</p>
+<p>In the realm of Functional Programming, pattern matching plays a fundamental role as a powerful tool for data manipulation and transformation. It aligns well with the principles of immutability and functional purity, making it an indispensable feature in languages that embrace functional paradigms, such as Rust (&lt;3).</p>
+
+<p>In Rust we can leverage it to perform elegant and concise data deconstruction and extraction. By pattern matching on algebraic data types like enums and tuples, we can handle different cases of data structures and perform operations accordingly. This leads to code that is more declarative, expressive, and easier to reason about.</p>
+
+<p>Functional programming heavily emphasizes the use of recursion, and pattern matching fits naturally into this paradigm. When working with recursive data structures like lists or trees, pattern matching enables concise handling of base cases and recursive calls. This not only improves code readability but also contributes to the safety of the program, as the Rust compiler can enforce exhaustive pattern matching, ensuring that all cases are handled explicitly.</p>
+
+<p>Additionally, pattern matching in Rust allows for the deconstruction of complex data structures into their constituent parts. This enables to access specific elements of data easily, facilitating the creation of higher-order functions and objects that operate on specific patterns of data.</p>
+
+<p>Overall, pattern matching in Rust aligns beautifully with the principles of Functional Programming, empowering developers to write code that is more concise, expressive, and robust. By embracing pattern matching in a all developing contexts, we are able to can unleash the full potential of the language&#8217;s type system, leading to more maintainable and scalable codebases.</p>
+
+<p>I could go on about it for much longer, although I hope that was enough for the knowledge-hungry. See you next time ˚ʚ♡ɞ˚</p>
 
     ]]>
   </description>
