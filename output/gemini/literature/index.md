@@ -4,4 +4,4 @@ customize it how you want !
 =>   /index.md Home
 
 ------------------------------------------------------------------
-=> gemini://localhost/articles/lobfs.gmi 2023-06-17 LOBFS - Library of Babel File System
+=> gemini://yael.moe/articles/lobfs.gmi 2023-06-17 LOBFS - Library of Babel File System

@@ -14,13 +14,13 @@
    :date-format-title "%DayNumber-%MonthNumber-%Year"   ;; format for date %DayNumber %DayName %MonthNumber %MonthName %Year
 
    :default-converter :markdown2
-   :html   t                                            ;; 't' to enable export to a html website / 'nil' to disable
+   :html   nil                                            ;; 't' to enable export to a html website / 'nil' to disable
    :gopher t                                            ;; 't' to enable export to a gopher website / 'nil' to disable
    :gemini t                                            ;; 't' to enable export to a gemini capsule / 'nil' to disable
-   :gemini-path      "gemini://localhost"          ;; absolute path of your gemini capsule
+   :gemini-path      "gemini://yael.moe"          ;; absolute path of your gemini capsule
    :gemini-index     "index.md"                         ;; filename of index file
    :gopher-path      "./"                            ;; absolute path of your gopher directory
-   :gopher-server    "localhost"                       ;; hostname of the gopher server
+   :gopher-server    "yael.moe"                       ;; hostname of the gopher server
    :gopher-port      "7070"                               ;; tcp port of the gopher server, 70 usually
    :gopher-format "[~d|~a|~a|~a|~a]~%"                  ;; menu format (geomyidae)
    :gopher-index "index.gph"                            ;; menu file   (geomyidae)
@@ -30,6 +30,7 @@
 
 
 (converter :name :markdown  :extension ".md"  :command "peg-markdown -t html -o %OUT data/%IN")
+(converter :name :markdown2 :extension ".md"  :command "multimarkdown -t html -o %OUT data/%IN")
 (converter :name :markdown2 :extension ".md"  :command "multimarkdown -t html -o %OUT data/%IN")
 (converter :name :org-mode  :extension ".org"
 	   :command (concatenate 'string

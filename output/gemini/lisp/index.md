@@ -4,4 +4,4 @@ customize it how you want !
 =>   /index.md Home
 
 ------------------------------------------------------------------
-=> gemini://localhost/articles/cl-yag.gmi 2023-06-10 New Website using cl-yag
+=> gemini://yael.moe/articles/cl-yag.gmi 2023-06-10 New Website using cl-yag

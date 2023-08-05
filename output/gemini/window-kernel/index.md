@@ -4,4 +4,4 @@ customize it how you want !
 =>   /index.md Home
 
 ------------------------------------------------------------------
-=> gemini://localhost/articles/windowskernel.gmi 2023-06-15 Window Kernel Resources
+=> gemini://yael.moe/articles/windowskernel.gmi 2023-06-15 Window Kernel Resources

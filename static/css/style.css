@@ -1,17 +1,314 @@
-/* =================================================================== */
-                        /* style.css for cl-yag */
-/* =================================================================== */
 @charset "utf-8";
+/* CSS Document */
+/* test sync */
+
+/* webfonts */
+@font-face {
+    font-family: dos;
+    src: url("../fonts//Web437_DOS-V_re_JPN16.woff");
+	font-display: block;
+}
+
+@font-face {
+    font-family: dos30;
+    src: url("../fonts//Web437_DOS-V_re_JPN30.woff");
+	font-display: block;
+}
+
+@font-face {
+    font-family: dostwn;
+    src: url("../fonts//Web437_DOS-V_TWN16.woff");
+	font-display: block;
+}
+
+@font-face {
+    font-family: madou;
+    src: url("../fonts//MadouFutoMaruGothic-d9Xo7.woff");
+	font-display: block;
+}
+
+/* general styles for all pages, basic text stuff, etc */
+body {
+    background-color: #223;
+    background-image: url("../img/check.gif");
+    color: #eee;
+    font-family: dos, madou, sans-serif;
+    font-size: 16px;
+    padding: 8px;
+    width: 800px;
+	left: -1px;
+	transform: translateX(-1px);
+	line-height: 1em;
+	image-rendering: crisp-edges;
+	image-rendering: pixelated;
+	text-size-adjust: none !important;
+}
+
+h1 {
+	font-family: dos30, madou, sans-serif;
+	font-size: 30px;
+	font-weight: normal;
+}
+
+p {
+	font-size: 1rem;
+}
+
+b, pre {
+	font-family: dostwn, madou, sans-serif;
+	font-size: 16px;
+	font-weight: normal;
+}
+
+pre {
+	margin-top:0.5em;;
+}
+
+a, a:visited {
+    color:#fdf;
+}
+
+.r {
+    float: right;
+}
+
+.ar {
+    text-align: right;
+}
+
+.ac {
+	text-align: center;
+}
+
+.ind {
+    margin-left: 4ch;
+	margin-left: 2em;
+}
 
 
-/* ~                             PURE                                ~ */
-@import url("pure_r1.0.0/pure.css");
+
+li {
+	margin-bottom: 0.4em;
+}
+
+/* sidebar stuff */
+.list {
+    float: left;
+    width: 72px;
+    margin-right: 8px;
+	user-select: none;
+}
+
+/* sidebar box */
+.list .box {
+    background-color: rgba(0.3,0.3,0.3,0.4);
+    border: 1px solid #fdf;
+    color: #fdf;
+    display: inline-block;
+    padding: 4px;
+    box-shadow: #fdf 2px 2px 0; 
+    overflow: ahaidden;
+    margin-bottom: 9px;
+	width: 72px;
+}
+
+.list .box a {
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    height: 100%;
+	position: relative;
+  	z-index: 0;
+  	padding: 8px;
+  	margin: -8px;
+}
+
+.list .box a:hover span {
+    font-family: madou;
+}
+
+.list .sel {
+    width: 82px !important;
+	position:relative;
+}
+
+.list .sel::after {
+	width: 3px;
+	height: 100%;
+	content: '';
+	display:block;
+	position: absolute;
+	right: 0px;
+	top: -1px;
+	z-index: 3;
+	background-color:#090930;
+	border-top: 1px solid #fdf;
+	border-bottom: 1px solid #fdf;
+}
+
+.list .arrow {
+	float:right;
+}
+
+.list .sel .arrow {
+	display:none;
+}
+
+/* sidebar top square */
+.list .square {
+    height: 72px;
+    text-align: right;
+    line-height: 1.1;
+}
+
+/* not a box, a little rss button */
+.list .notbox {
+	float: right;
+	margin-right: -12px;
+}
+
+/* the status panel thing */
+.list .statusbox {
+	margin-top: 64px;
+	background-color: rgba(0.3,0.3,0.3,0.4);
+    border: 1px solid #666;
+    color: #fdf;
+    display: inline-block;
+	padding: 4px;
+	overflow: hidden;
+	width: 72px;
+	box-shadow: #337 3px 3px 0;
+}
+
+.statusbox b {
+	line-height: 2em;
+}
+
+.statusbox > div {
+	display: inline-block;
+}
+
+.statusbox .fm {
+	font-family: madou;
+}
+
+/* volume panel */
+.list .volumebox {
+	margin-top: 16px;
+	background-color: rgba(0.3,0.3,0.3,0.4);
+    border: 1px solid #666;
+    color: #fdf;
+    display: inline-block;
+	padding: 4px;
+	overflow: hidden;
+	width: 72px;
+	box-shadow: #337 3px 3px 0;
+	position:sticky;
+	top:16px;
+}
+
+.volumebox input {
+	width: 72px;	
+}
+
+.volumebox .nudge {
+	padding-left: 2px;	
+}
+
+/* main content area */
+.main {
+	position: relative;
+	z-index: 1;
+    float: left;
+    margin-left: 8px;
+    width: 665px;
+    min-height: 900px;
+    background-color: #151440;
+    background-image: url("../img/gmbg1.gif");
+    background-position: -5px -5px;
+    padding: 4px;
+    padding-left: 12px;
+    box-shadow: #337 4px 4px 0; 
+	border: 3px double #fdf;
+}
+
+.main p {
+	line-height: 1.2;
+	margin: 0;
+	margin-bottom: 1em;
+	margin-right: 1em;
+}
 
 
-/* ~                             CLYM                                ~ */
-@import url("clym.css");
 
+.bottom {
+	display: inline-block;
+	width: 686px;
+	margin-top: 8px;
+	margin-left: 89px;
+}
 
-/* ~                          LAST ENTRY                             ~ */
-/* ~             use custom.css for overriding rules                 ~ */
-@import url("custom.css");
+.bottom img {
+	float: right;
+	margin-left: 6px;
+}
+
+.bottom span {
+	/*"copyright ..." */
+    display: inline-block;
+    margin-top: 6px;
+}
+
+meowplayer p {
+	font-family: dostwn, madou;
+}
+
+div.clock {
+	float: right;
+	margin: 6px;
+}
+
+div.clock > p {
+	text-align: right;
+	margin-right: 4px;
+}
+
+div.clockborder {
+	border: 1px solid #3a3a3a;
+}
+
+canvas#msclock {
+        border:  4px solid rgb(240,240,240);
+        image-rendering: optimizeSpeed;             /* Older versions of FF          */
+        image-rendering: -moz-crisp-edges;          /* FF 6.0+                       */
+        image-rendering: -webkit-optimize-contrast; /* Safari                        */
+        image-rendering: -o-crisp-edges;            /* OS X & Windows Opera (12.02+) */
+        image-rendering: pixelated;                 /* Awesome future-browsers       */
+        -ms-interpolation-mode: nearest-neighbor;   /* IE                            */
+		filter: invert(100%);
+}
+
+canvas#msclock.s1 {
+	filter: none;
+	border: 4px solid rgb(212,208,200);
+}
+
+img.sleepyoneko {
+	position: absolute;
+	top: 341px;
+	left: 60px;	
+}
+
+ul.meows a {
+	text-decoration: none;
+}
+
+ul.meows a:hover {
+	text-decoration: underline;
+}
+
+.friendnumber {
+	float:right;
+	border-bottom: 3px double #aaa;
+	margin-right: 16px;
+}

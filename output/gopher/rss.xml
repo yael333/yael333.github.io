@@ -306,8 +306,8 @@ fn main() {
 
     ]]>
   </description>
-  <guid>gopher://localhost:7070/0.//article-memsafety.txt</guid>
-  <link>gopher://localhost:7070/0.//article-memsafety.txt</link>
+  <guid>gopher://yael.moe:7070/0.//article-memsafety.txt</guid>
+  <link>gopher://yael.moe:7070/0.//article-memsafety.txt</link>
   <pubDate>Wed, 28 Jun 2023 00:00:00 GMT</pubDate>
 </item>
 <item>
@@ -320,8 +320,8 @@ fn main() {
 
     ]]>
   </description>
-  <guid>gopher://localhost:7070/0.//article-lobfs.txt</guid>
-  <link>gopher://localhost:7070/0.//article-lobfs.txt</link>
+  <guid>gopher://yael.moe:7070/0.//article-lobfs.txt</guid>
+  <link>gopher://yael.moe:7070/0.//article-lobfs.txt</link>
   <pubDate>Sat, 17 Jun 2023 00:00:00 GMT</pubDate>
 </item>
 <item>
@@ -361,8 +361,8 @@ It&#8217;s ever growing &lt;3</p>
 
     ]]>
   </description>
-  <guid>gopher://localhost:7070/0.//article-windowskernel.txt</guid>
-  <link>gopher://localhost:7070/0.//article-windowskernel.txt</link>
+  <guid>gopher://yael.moe:7070/0.//article-windowskernel.txt</guid>
+  <link>gopher://yael.moe:7070/0.//article-windowskernel.txt</link>
   <pubDate>Thu, 15 Jun 2023 00:00:00 GMT</pubDate>
 </item>
 <item>
@@ -392,8 +392,8 @@ I was always in favor of static generated websites, with no backend and little a
 
     ]]>
   </description>
-  <guid>gopher://localhost:7070/0.//article-cl-yag.txt</guid>
-  <link>gopher://localhost:7070/0.//article-cl-yag.txt</link>
+  <guid>gopher://yael.moe:7070/0.//article-cl-yag.txt</guid>
+  <link>gopher://yael.moe:7070/0.//article-cl-yag.txt</link>
   <pubDate>Sat, 10 Jun 2023 00:00:00 GMT</pubDate>
 </item>
 <item>
@@ -731,8 +731,8 @@ fn main() {
 
     ]]>
   </description>
-  <guid>gopher://localhost:7070/0.//article-rustpatterns.txt</guid>
-  <link>gopher://localhost:7070/0.//article-rustpatterns.txt</link>
+  <guid>gopher://yael.moe:7070/0.//article-rustpatterns.txt</guid>
+  <link>gopher://yael.moe:7070/0.//article-rustpatterns.txt</link>
   <pubDate>Tue, 16 May 2023 00:00:00 GMT</pubDate>
 </item>
 <item>
@@ -923,8 +923,8 @@ If the <strong>P</strong>resent bit is set then the page is actually in physical
 
     ]]>
   </description>
-  <guid>gopher://localhost:7070/0.//article-softmmu.txt</guid>
-  <link>gopher://localhost:7070/0.//article-softmmu.txt</link>
+  <guid>gopher://yael.moe:7070/0.//article-softmmu.txt</guid>
+  <link>gopher://yael.moe:7070/0.//article-softmmu.txt</link>
   <pubDate>Sun, 12 Feb 2023 00:00:00 GMT</pubDate>
 </item>
 
